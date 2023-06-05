@@ -18,6 +18,7 @@ public class LogInActivity extends AppCompatActivity {
         startActivity(new Intent(this, EmailVerificationActivity.class));
     }
     public void onYandexClick(View v){
-        Toast.makeText(this, "не нажимать", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "не нажимать", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

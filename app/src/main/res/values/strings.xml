@@ -2,4 +2,6 @@
     <string name="app_name">SmartLab</string>
     <string name="Chart1">Без карты пациента вы не сможете заказать анализы.</string>
     <string name="Chart2">В картах пациентов будут храниться результаты анализов вас и ваших близких.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
