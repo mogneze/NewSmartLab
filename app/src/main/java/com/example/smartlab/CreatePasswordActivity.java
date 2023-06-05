@@ -8,12 +8,18 @@ import android.view.View;
 
 public class CreatePasswordActivity extends AppCompatActivity {
 
+    String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_password);
     }
-    public void onSkipClick(View v){
+
+    public void onNumberButtonClick(View v){
+
+    }
+
+    public void onSkipPasswordClick(View v){
         startActivity(new Intent(this, CreateChartActivity.class));
     }
 }

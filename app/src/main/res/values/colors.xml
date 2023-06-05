@@ -16,4 +16,6 @@
     <color name="green">#00B712</color>
     <color name="grey">#939396</color>
     <color name="violet_grey">#7E7E9A</color>
+    <color name="background_color">#F5F5F5</color>
+    <color name="transparent">#00000000</color>
 </resources>
