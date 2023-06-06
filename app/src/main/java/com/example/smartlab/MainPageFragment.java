@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class MainPageFragment extends Fragment {
     }
 
     ArrayList<NewsItem> newsItemArrayList;
-    private ArrayList<CatalogItem> list;
+    ArrayList<CatalogItem> catalogItemList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,16 +69,16 @@ public class MainPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 
         initNews(); //новости кароч
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView newsRecyclerView = view.findViewById(R.id.newsRecyclerView);
         NewsAdapter newsAdapter = new NewsAdapter(newsItemArrayList);
-        recyclerView.setAdapter(newsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
+        newsRecyclerView.setAdapter(newsAdapter);
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
 
-        // Inflate the layout for this fragment
         initCatalog(); //и типа эти как их там
-        CatalogAdapter catalogAdapter = new CatalogAdapter(getActivity().getApplicationContext(), list);
-        ListView catalogList = view.findViewById(R.id.catalogListView);
-        catalogList.setAdapter(catalogAdapter);
+        RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
+        CatalogAdapter catalogAdapter = new CatalogAdapter(catalogItemList);
+        catalogRecyclerView.setAdapter(catalogAdapter);
+        catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
         return view;
     }
     public void initNews(){
@@ -90,9 +89,11 @@ public class MainPageFragment extends Fragment {
         newsItemArrayList.add(new NewsItem("назв", "камент", 10.0));
     }
     private void initCatalog(){
-        list = new ArrayList<CatalogItem>();
-        list.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
-        list.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
-        list.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+        catalogItemList = new ArrayList<>();
+        catalogItemList.add(new CatalogItem(1, "ПЦР-тест на определение РНК коронавируса стандартный", "des", 1800, "2 дня", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "Клинический анализ крови с лейкоцитарной формулировкой", "des", 2000, "1 день", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "name3", "des", 10.0, "1 d", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
     }
 }

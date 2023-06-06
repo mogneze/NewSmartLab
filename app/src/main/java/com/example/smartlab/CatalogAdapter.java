@@ -7,39 +7,48 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
-public class CatalogAdapter extends BaseAdapter {
-    private ArrayList<CatalogItem> data;
-    private LayoutInflater inflater;
-    public CatalogAdapter(Context context, ArrayList<CatalogItem> data){
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.data = data;
-    }
-    @Override
-    public int getCount() {
-        return data.size();
-    }
-    @Override
-    public Object getItem(int position) {
-        return data.get(position);
-    }
-    @Override
-    public long getItemId(int i) {
-        return data.get(i).hashCode();
-    }
+public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder>{
 
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView textCatalogName;
+        public TextView textCatalogTimeResult;
+        public TextView textCatalogPrice;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            textCatalogName = itemView.findViewById(R.id.textCatalogName);
+            textCatalogTimeResult = itemView.findViewById(R.id.textCatalogTimeResult);
+            textCatalogPrice = itemView.findViewById(R.id.textCatalogPrice);
+        }
+    }
+    ArrayList<CatalogItem> list;
+    public CatalogAdapter(ArrayList<CatalogItem> list) {
+        this.list = list;
+    }
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if(convertView == null) view = inflater.inflate(R.layout.catalog_row, null);
-        TextView name = (TextView)view.findViewById(R.id.textCatalogName);
-        TextView time = (TextView)view.findViewById(R.id.textCatalogTimeResult);
-        TextView price = (TextView)view.findViewById(R.id.textCatalogPrice);
-        CatalogItem item = data.get(position);
-        name.setText(item.getName());
-        time.setText(item.getTimeResult());
-        price.setText(String.valueOf(item.getPrice())+" ₽");
-        return view;
+    public CatalogAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View contactView = LayoutInflater.from(parent.getContext()).inflate(R.layout.catalog_row, parent, false);
+        CatalogAdapter.ViewHolder viewHolder = new CatalogAdapter.ViewHolder(contactView);
+        return viewHolder;
+    }
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CatalogItem currentItem = list.get(position);
+        TextView textCatalogName = holder.textCatalogName;
+        TextView textCatalogTimeResult = holder.textCatalogTimeResult;
+        TextView textCatalogPrice = holder.textCatalogPrice;
+        textCatalogName.setText(currentItem.getName());
+        textCatalogTimeResult.setText(currentItem.getTimeResult());
+        textCatalogPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
+    }
+    @Override
+    public int getItemCount() {
+        return list.size();
     }
 }
