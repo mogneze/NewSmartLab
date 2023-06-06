@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -51,8 +50,9 @@ public class MainPageFragment extends Fragment {
         return fragment;
     }
 
-    ArrayList<NewsItem> newsItemArrayList;
+    ArrayList<NewsItem> newsItemList;
     ArrayList<CatalogItem> catalogItemList;
+    ArrayList<CategoryItem> categoryItemList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,23 +70,36 @@ public class MainPageFragment extends Fragment {
 
         initNews(); //новости кароч
         RecyclerView newsRecyclerView = view.findViewById(R.id.newsRecyclerView);
-        NewsAdapter newsAdapter = new NewsAdapter(newsItemArrayList);
+        NewsAdapter newsAdapter = new NewsAdapter(newsItemList);
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
 
-        initCatalog(); //и типа эти как их там
+        initCategories(); //категории
+        RecyclerView categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(categoryItemList);
+        categoryRecyclerView.setAdapter(categoryAdapter);
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
+
+        initCatalog(); //и эти как их там
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
         CatalogAdapter catalogAdapter = new CatalogAdapter(catalogItemList);
         catalogRecyclerView.setAdapter(catalogAdapter);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
         return view;
     }
-    public void initNews(){
-        newsItemArrayList = new ArrayList<>();
-        newsItemArrayList.add(new NewsItem("Чек-ап для мужчин", "9 исследований", 8000));
-        newsItemArrayList.add(new NewsItem("Подготовка к вакцинации", "Комплексное обследование перед вакцинацией", 4000));
-        newsItemArrayList.add(new NewsItem("назв", "камент", 10.0));
-        newsItemArrayList.add(new NewsItem("назв", "камент", 10.0));
+    private void initNews(){
+        newsItemList = new ArrayList<>();
+        newsItemList.add(new NewsItem("Чек-ап для мужчин", "9 исследований", 8000));
+        newsItemList.add(new NewsItem("Подготовка к вакцинации", "Комплексное обследование перед вакцинацией", 4000));
+        newsItemList.add(new NewsItem("назв", "камент", 10.0));
+        newsItemList.add(new NewsItem("назв", "камент", 10.0));
+    }
+    private void initCategories(){
+        categoryItemList = new ArrayList<>();
+        categoryItemList.add(new CategoryItem(1, "Популярные"));
+        categoryItemList.add(new CategoryItem(2, "Covid"));
+        categoryItemList.add(new CategoryItem(3, "Комплексные"));
+        categoryItemList.add(new CategoryItem(4, "ЗОЖ"));
     }
     private void initCatalog(){
         catalogItemList = new ArrayList<>();
