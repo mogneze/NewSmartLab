@@ -161,8 +161,6 @@
                         android:text="Button" />
                 </LinearLayout>
             </HorizontalScrollView>
-
-
             <ListView
                 android:id="@+id/catalogListView"
                 android:layout_width="match_parent"
