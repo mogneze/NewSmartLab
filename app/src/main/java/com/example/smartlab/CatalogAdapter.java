@@ -26,16 +26,16 @@ public class CatalogAdapter extends BaseAdapter {
     }
     @Override
     public long getItemId(int i) {
-        return 0;
+        return data.get(i).hashCode();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if(convertView == null) view = inflater.inflate(R.layout.catalog_row, null);
-        TextView name = view.findViewById(R.id.textCatalogName);
-        TextView time = view.findViewById(R.id.textCatalogTimeResult);
-        TextView price = view.findViewById(R.id.textCatalogPrice);
+        TextView name = (TextView)view.findViewById(R.id.textCatalogName);
+        TextView time = (TextView)view.findViewById(R.id.textCatalogTimeResult);
+        TextView price = (TextView)view.findViewById(R.id.textCatalogPrice);
         CatalogItem item = data.get(position);
         name.setText(item.getName());
         time.setText(item.getTimeResult());

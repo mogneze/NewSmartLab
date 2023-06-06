@@ -67,7 +67,7 @@ public class MainPageFragment extends Fragment {
         initCatalog();
         CatalogAdapter adapter = new CatalogAdapter(getActivity().getApplicationContext(), list);
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-        ListView catalogList = (ListView)view.findViewById(R.id.catalogListView);
+        ListView catalogList = view.findViewById(R.id.catalogListView);
         catalogList.setAdapter(adapter);
         return view;
     }
