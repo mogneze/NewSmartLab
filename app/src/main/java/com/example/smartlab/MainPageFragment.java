@@ -3,6 +3,8 @@ package com.example.smartlab;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,7 @@ public class MainPageFragment extends Fragment {
         return fragment;
     }
 
+    ArrayList<NewsItem> newsItemArrayList;
     private ArrayList<CatalogItem> list;
 
     @Override
@@ -63,13 +66,28 @@ public class MainPageFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        initCatalog();
-        CatalogAdapter adapter = new CatalogAdapter(getActivity().getApplicationContext(), list);
+
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
+
+        initNews(); //новости кароч
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        NewsAdapter newsAdapter = new NewsAdapter(newsItemArrayList);
+        recyclerView.setAdapter(newsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
+
+        // Inflate the layout for this fragment
+        initCatalog(); //и типа эти как их там
+        CatalogAdapter catalogAdapter = new CatalogAdapter(getActivity().getApplicationContext(), list);
         ListView catalogList = view.findViewById(R.id.catalogListView);
-        catalogList.setAdapter(adapter);
+        catalogList.setAdapter(catalogAdapter);
         return view;
+    }
+    public void initNews(){
+        newsItemArrayList = new ArrayList<>();
+        newsItemArrayList.add(new NewsItem("Чек-ап для мужчин", "9 исследований", 8000));
+        newsItemArrayList.add(new NewsItem("Подготовка к вакцинации", "Комплексное обследование перед вакцинацией", 4000));
+        newsItemArrayList.add(new NewsItem("назв", "камент", 10.0));
+        newsItemArrayList.add(new NewsItem("назв", "камент", 10.0));
     }
     private void initCatalog(){
         list = new ArrayList<CatalogItem>();
