@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +50,8 @@ public class MainPageFragment extends Fragment {
         return fragment;
     }
 
+    private ArrayList<CatalogItem> list;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +59,22 @@ public class MainPageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
 
+    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_page, container, false);
+        initCatalog();
+        CatalogAdapter adapter = new CatalogAdapter(getActivity().getApplicationContext(), list);
+        View view = inflater.inflate(R.layout.fragment_main_page, container, false);
+        ListView catalogList = (ListView)view.findViewById(R.id.catalogListView);
+        catalogList.setAdapter(adapter);
+        return view;
+    }
+    private void initCatalog(){
+        list = new ArrayList<CatalogItem>();
+        list.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+        list.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+        list.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
     }
 }
