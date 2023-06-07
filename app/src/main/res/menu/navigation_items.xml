@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/a"
-        android:title="a"
+    <item android:id="@+id/analysesMenuItem"
+        android:title="Анализы"
         android:icon="@drawable/analyses_icon"/>
-    <item android:id="@+id/b"
-        android:title="b"
-        android:icon="@drawable/analyses_icon"/>
-    <item android:id="@+id/c"
-        android:title="c"
-        android:icon="@drawable/analyses_icon"/>
+    <item android:id="@+id/resultsMenuItem"
+        android:title="Результаты"
+        android:icon="@drawable/results_icon"/>
+    <item android:id="@+id/supportMenuItem"
+        android:title="Поддержка"
+        android:icon="@drawable/support_icon"/>
+    <item android:id="@+id/profileMenuItem"
+        android:title="Профиль"
+        android:icon="@drawable/profile_icon"/>
 </menu>
