@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -68,45 +69,62 @@ public class MainPageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
 
-        initNews(); //новости кароч
+        initData(); //новости кароч
+        NewsAdapter.OnNewsClickListener newsClickListener = new NewsAdapter.OnNewsClickListener() {
+            @Override
+            public void onNewsClick(NewsItem newsItem, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), newsItem.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        };
         RecyclerView newsRecyclerView = view.findViewById(R.id.newsRecyclerView);
-        NewsAdapter newsAdapter = new NewsAdapter(newsItemList);
+        NewsAdapter newsAdapter = new NewsAdapter(newsItemList, newsClickListener);
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
 
-        initCategories(); //категории
+        //категории
+        CategoryAdapter.OnCategoryClickListener categoryClickListener = new CategoryAdapter.OnCategoryClickListener() {
+            @Override
+            public void onCategoryClick(CategoryItem categoryItem, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), categoryItem.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        };
         RecyclerView categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(categoryItemList);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(categoryItemList, categoryClickListener);
         categoryRecyclerView.setAdapter(categoryAdapter);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
 
-        initCatalog(); //и эти как их там
+        //и эти как их там
+        CatalogAdapter.OnCatalogClickListener catalogClickListener = new CatalogAdapter.OnCatalogClickListener() {
+            @Override
+            public void onCatalogClick(CatalogItem catalogItem, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), catalogItem.getName(), Toast.LENGTH_SHORT).show();
+            }
+        };
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
-        CatalogAdapter catalogAdapter = new CatalogAdapter(catalogItemList);
+        CatalogAdapter catalogAdapter = new CatalogAdapter(catalogItemList, catalogClickListener);
         catalogRecyclerView.setAdapter(catalogAdapter);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
         return view;
     }
-    private void initNews(){
+    private void initData(){
         newsItemList = new ArrayList<>();
+        categoryItemList = new ArrayList<>();
+        catalogItemList = new ArrayList<>();
+
         newsItemList.add(new NewsItem("Чек-ап для мужчин", "9 исследований", 8000));
         newsItemList.add(new NewsItem("Подготовка к вакцинации", "Комплексное обследование перед вакцинацией", 4000));
         newsItemList.add(new NewsItem("назв", "камент", 10.0));
         newsItemList.add(new NewsItem("назв", "камент", 10.0));
-    }
-    private void initCategories(){
-        categoryItemList = new ArrayList<>();
+
         categoryItemList.add(new CategoryItem(1, "Популярные"));
         categoryItemList.add(new CategoryItem(2, "Covid"));
         categoryItemList.add(new CategoryItem(3, "Комплексные"));
         categoryItemList.add(new CategoryItem(4, "ЗОЖ"));
-    }
-    private void initCatalog(){
-        catalogItemList = new ArrayList<>();
+
         catalogItemList.add(new CatalogItem(1, "ПЦР-тест на определение РНК коронавируса стандартный", "des", 1800, "2 дня", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "Клинический анализ крови с лейкоцитарной формулировкой", "des", 2000, "1 день", "prep", "bio"));
-        catalogItemList.add(new CatalogItem(1, "name3", "des", 10.0, "1 d", "prep", "bio"));
-        catalogItemList.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "Биохимический анализ крови, базовый", "des", 2440, "1 день", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "СОЭ (венозная кровь)", "des", 1800, "1 день", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
     }
 }

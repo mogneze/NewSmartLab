@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
 
+    interface OnNewsClickListener{
+        void onNewsClick(NewsItem newsItem, int position);
+    }
+    private final OnNewsClickListener onClickListener;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textTitle;
         public TextView textComment;
@@ -24,7 +29,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         }
     }
     ArrayList<NewsItem> list;
-    public NewsAdapter(ArrayList<NewsItem> list) {
+    NewsAdapter(ArrayList<NewsItem> list, OnNewsClickListener onClickListener) {
+        this.onClickListener = onClickListener;
         this.list = list;
     }
     @NonNull
@@ -43,6 +49,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         textTitle.setText(currentItem.getTitle());
         textComment.setText(currentItem.getComment());
         textPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickListener.onNewsClick(currentItem, position);
+            }
+        });
     }
     @Override
     public int getItemCount() {

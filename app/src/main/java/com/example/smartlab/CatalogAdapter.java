@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,20 +16,27 @@ import java.util.ArrayList;
 
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder>{
 
+    interface OnCatalogClickListener{
+        void onCatalogClick(CatalogItem catalogItem, int position);
+    }
+    private final OnCatalogClickListener onClickListener;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView textCatalogName;
-        public TextView textCatalogTimeResult;
-        public TextView textCatalogPrice;
+        public TextView textCatalogName, textCatalogTimeResult, textCatalogPrice;
+        public Button buttonCatalogAdd;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textCatalogName = itemView.findViewById(R.id.textCatalogName);
             textCatalogTimeResult = itemView.findViewById(R.id.textCatalogTimeResult);
             textCatalogPrice = itemView.findViewById(R.id.textCatalogPrice);
+            buttonCatalogAdd = itemView.findViewById(R.id.btnCatalogAdd);
         }
     }
+
     ArrayList<CatalogItem> list;
-    public CatalogAdapter(ArrayList<CatalogItem> list) {
+    CatalogAdapter(ArrayList<CatalogItem> list, OnCatalogClickListener onClickListener) {
+        this.onClickListener = onClickListener;
         this.list = list;
     }
     @NonNull
@@ -43,9 +52,17 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         TextView textCatalogName = holder.textCatalogName;
         TextView textCatalogTimeResult = holder.textCatalogTimeResult;
         TextView textCatalogPrice = holder.textCatalogPrice;
+
         textCatalogName.setText(currentItem.getName());
         textCatalogTimeResult.setText(currentItem.getTimeResult());
         textCatalogPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickListener.onCatalogClick(currentItem, position);
+            }
+        });
     }
     @Override
     public int getItemCount() {

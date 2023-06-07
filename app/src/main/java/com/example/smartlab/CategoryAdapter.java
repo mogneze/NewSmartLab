@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
 
+    interface OnCategoryClickListener{
+        void onCategoryClick(CategoryItem categoryItem, int position);
+    }
+    private final CategoryAdapter.OnCategoryClickListener onClickListener;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textCategoryTitle;
         public ViewHolder(@NonNull View itemView) {
@@ -20,7 +25,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
     ArrayList<CategoryItem> list;
-    public CategoryAdapter(ArrayList<CategoryItem> list) {
+    CategoryAdapter(ArrayList<CategoryItem> list, OnCategoryClickListener onClickListener) {
+        this.onClickListener = onClickListener;
         this.list = list;
     }
     @NonNull
@@ -35,6 +41,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         CategoryItem currentItem = list.get(position);
         TextView textCategoryTitle = holder.textCategoryTitle;
         textCategoryTitle.setText(currentItem.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickListener.onCategoryClick(currentItem, position);
+            }
+        });
     }
     @Override
     public int getItemCount() {
