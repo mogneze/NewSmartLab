@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_main_page" />
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"

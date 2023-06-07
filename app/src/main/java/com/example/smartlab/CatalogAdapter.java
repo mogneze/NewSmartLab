@@ -61,7 +61,16 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnCatalogAdd.setText("Удалить");
+                if(btnCatalogAdd.getText().toString().equals("Добавить")) {
+                    btnCatalogAdd.setText("Удалить");
+                    btnCatalogAdd.setTextColor(view.getResources().getColor(R.color.active_blue));
+                    btnCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.empty_rounded_button));
+                }
+                else{
+                    btnCatalogAdd.setText("Добавить");
+                    btnCatalogAdd.setTextColor(view.getResources().getColor(R.color.white));
+                    btnCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.rounded_button_active));
+                }
             }
         });
 

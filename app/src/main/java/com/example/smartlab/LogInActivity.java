@@ -22,7 +22,7 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setEnabled(false);
-        buttonNext.setBackground(getDrawable(R.color.inactive_blue));
+        buttonNext.setBackground(getDrawable(R.drawable.rounded_button_inactive));
         emailText = findViewById(R.id.emailText);
         emailText.addTextChangedListener(new TextWatcher() {
             @Override
