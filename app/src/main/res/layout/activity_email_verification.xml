@@ -9,7 +9,7 @@
     android:background="@color/background_color">
 
     <ImageButton
-        android:id="@+id/btnEmailBack"
+        android:id="@+id/btnCartBack"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="32dp"
@@ -30,7 +30,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEmailBack" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCartBack" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.navigation);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.analysesMenuItem);
     }
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, mainPageFragment).commit();
                 return true;
             case R.id.resultsMenuItem:
-                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, CartActivity.class));
                 return true;
             case R.id.supportMenuItem:
                 Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();

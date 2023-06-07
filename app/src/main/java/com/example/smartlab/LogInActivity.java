@@ -11,7 +11,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class LogInActivity extends AppCompatActivity {
     EditText emailText;
@@ -20,7 +19,7 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        buttonNext = findViewById(R.id.buttonNext);
+        buttonNext = findViewById(R.id.buttonGoToOrder);
         buttonNext.setEnabled(false);
         buttonNext.setBackground(getDrawable(R.drawable.rounded_button_inactive));
         emailText = findViewById(R.id.emailText);
@@ -41,12 +40,12 @@ public class LogInActivity extends AppCompatActivity {
         emailText = findViewById(R.id.emailText);
         String emText = emailText.getText().toString();
         if (!TextUtils.isEmpty(emText) && Patterns.EMAIL_ADDRESS.matcher(emText).matches()) {
-            buttonNext = findViewById(R.id.buttonNext);
+            buttonNext = findViewById(R.id.buttonGoToOrder);
             buttonNext.setBackground(getDrawable(R.drawable.rounded_button_active));
             buttonNext.setEnabled(true);
         }
         else {
-            buttonNext = findViewById(R.id.buttonNext);
+            buttonNext = findViewById(R.id.buttonGoToOrder);
             buttonNext.setBackground(getDrawable(R.drawable.rounded_button_inactive));
             buttonNext.setEnabled(false);
         }
@@ -56,5 +55,6 @@ public class LogInActivity extends AppCompatActivity {
     }
     public void onYandexClick(View v){
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
