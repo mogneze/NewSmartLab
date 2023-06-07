@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/textSkipChart"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="28dp"
         android:layout_marginTop="32dp"
         android:text="Пропустить"
         android:textColor="@color/active_blue"
@@ -134,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="48dp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded_button_active"
         android:text="Создать"
         android:textColor="@color/white"
         android:textSize="17dp"

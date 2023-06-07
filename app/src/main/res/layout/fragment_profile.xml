@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="22dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button_active"
                 android:onClick="onCreateChartClick"
                 android:text="Сохранить"
                 android:textColor="@color/white"

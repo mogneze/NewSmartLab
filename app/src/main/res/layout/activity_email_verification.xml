@@ -9,7 +9,7 @@
     android:background="@color/background_color">
 
     <ImageButton
-        android:id="@+id/button"
+        android:id="@+id/btnEmailBack"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="32dp"
@@ -20,7 +20,7 @@
         android:onClick="onBackClick"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textEmail1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
@@ -30,7 +30,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEmailBack" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -40,7 +40,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textEmail1"
         android:gravity="center">
 
         <EditText
@@ -90,11 +90,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textSendCode"
         android:layout_width="242dp"
         android:layout_height="wrap_content"
         android:text="Отправить код повторно можно будет через 59 секунд"
-        android:textColor="@color/grey"
         android:textAlignment="center"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

@@ -44,7 +44,7 @@
         android:layout_height="40dp"
         android:text="Добавить"
         android:textSize="14sp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded_button_active"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

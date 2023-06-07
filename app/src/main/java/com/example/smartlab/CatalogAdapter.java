@@ -52,10 +52,18 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         TextView textCatalogName = holder.textCatalogName;
         TextView textCatalogTimeResult = holder.textCatalogTimeResult;
         TextView textCatalogPrice = holder.textCatalogPrice;
+        Button btnCatalogAdd = holder.buttonCatalogAdd;
 
         textCatalogName.setText(currentItem.getName());
         textCatalogTimeResult.setText(currentItem.getTimeResult());
         textCatalogPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
+        
+        holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnCatalogAdd.setText("Удалить");
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
