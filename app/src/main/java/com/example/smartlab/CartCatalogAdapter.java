@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,14 @@ public class CartCatalogAdapter extends RecyclerView.Adapter<CartCatalogAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textCatalogName, textCatalogPatient, textCatalogPrice;
+        public ImageButton btnRemove;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textCatalogName = itemView.findViewById(R.id.textCartTitle);
             textCatalogPatient = itemView.findViewById(R.id.textCartPatient);
             textCatalogPrice = itemView.findViewById(R.id.textCartPrice);
+            btnRemove = itemView.findViewById(R.id.btnCartRemoveItem);
         }
     }
     ArrayList<CatalogItem> list;
@@ -46,6 +49,15 @@ public class CartCatalogAdapter extends RecyclerView.Adapter<CartCatalogAdapter.
 
         textCatalogName.setText(currentItem.getName());
         textCatalogPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
+
+        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, list.size());
+            }
+        });
 
     }
     @Override
