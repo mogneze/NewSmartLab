@@ -47,7 +47,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 onClickListener.onCategoryClick(currentItem, position);
             }
         });
+
     }
+
     @Override
     public int getItemCount() {
         return list.size();

@@ -72,7 +72,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/buttonGoToOrder"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAddToCartAdd"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
@@ -84,11 +84,11 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/buttonGoToOrder"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAddToCartAdd"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonGoToOrder"
+            android:id="@+id/buttonAddToCartAdd"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@drawable/rounded_button_active"

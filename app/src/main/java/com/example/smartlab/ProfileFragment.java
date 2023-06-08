@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +68,14 @@ public class ProfileFragment extends Fragment {
         Spinner spinner = view.findViewById(R.id.spinnerGender);
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, genders);
         spinner.setAdapter(adapter);
+
+        ImageView profilePic = view.findViewById(R.id.imgProfilePicture);
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "ну картинка типо", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 }

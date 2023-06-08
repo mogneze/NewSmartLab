@@ -41,7 +41,7 @@
                 android:src="@drawable/camera"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textProfile1" />
+                app:layout_constraintTop_toBottomOf="@+id/textProfile1"/>
 
             <TextView
                 android:id="@+id/textProfile2"
@@ -143,7 +143,6 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="22dp"
                 android:background="@drawable/rounded_button_active"
-                android:onClick="onCreateChartClick"
                 android:text="Сохранить"
                 android:textColor="@color/white"
                 android:textSize="17dp"

@@ -33,7 +33,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
             buttonCatalogAdd = itemView.findViewById(R.id.btnCatalogAdd);
         }
     }
-
     ArrayList<CatalogItem> list;
     CatalogAdapter(ArrayList<CatalogItem> list, OnCatalogClickListener onClickListener) {
         this.onClickListener = onClickListener;
