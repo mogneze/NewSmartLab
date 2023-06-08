@@ -3,12 +3,15 @@ package com.example.smartlab;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -98,6 +101,12 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onCatalogClick(CatalogItem catalogItem, int position) {
                 Toast.makeText(getActivity().getApplicationContext(), catalogItem.getName(), Toast.LENGTH_SHORT).show();
+                //FrameLayout frameLayout = view.findViewById(R.id.addToCartFrameLayout);
+                //frameLayout.setRes(R.layout.add_to_cart_widget);
+                FragmentContainerView fragmentContainerView = view.findViewById(R.id.fragmentCartContainer);
+                CartFragment cartFragment = new CartFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment);
+                transaction.commit();
             }
         };
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
