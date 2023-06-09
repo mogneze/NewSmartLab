@@ -1,5 +1,7 @@
 package com.example.smartlab;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,8 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -100,13 +109,7 @@ public class MainPageFragment extends Fragment {
         CatalogAdapter.OnCatalogClickListener catalogClickListener = new CatalogAdapter.OnCatalogClickListener() {
             @Override
             public void onCatalogClick(CatalogItem catalogItem, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), catalogItem.getName(), Toast.LENGTH_SHORT).show();
-                //FrameLayout frameLayout = view.findViewById(R.id.addToCartFrameLayout);
-                //frameLayout.setRes(R.layout.add_to_cart_widget);
-                FragmentContainerView fragmentContainerView = view.findViewById(R.id.fragmentCartContainer);
-                CartFragment cartFragment = new CartFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment);
-                transaction.commit();
+                createDialog(catalogItem);
             }
         };
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
@@ -130,10 +133,44 @@ public class MainPageFragment extends Fragment {
         categoryItemList.add(new CategoryItem(3, "Комплексные"));
         categoryItemList.add(new CategoryItem(4, "ЗОЖ"));
 
-        catalogItemList.add(new CatalogItem(1, "ПЦР-тест на определение РНК коронавируса стандартный", "des", 1800, "2 дня", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "ПЦР-тест на определение РНК коронавируса стандартный", "ну да описание", 1800, "2 дня", "подготовка", "Венозная кровь"));
         catalogItemList.add(new CatalogItem(1, "Клинический анализ крови с лейкоцитарной формулировкой", "des", 2000, "1 день", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "Биохимический анализ крови, базовый", "des", 2440, "1 день", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "СОЭ (венозная кровь)", "des", 1800, "1 день", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+    }
+    public void createDialog(CatalogItem catalogItem){
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(R.layout.add_to_cart_widget);
+        ImageView dismiss = bottomSheetDialog.findViewById(R.id.btnAddToCartClose);
+        TextView title = bottomSheetDialog.findViewById(R.id.textAddToCartTitle);
+        title.setText(catalogItem.getName());
+        TextView description = bottomSheetDialog.findViewById(R.id.textAddToCartDescription);
+        description.setText(catalogItem.getDescription());
+        TextView preparation = bottomSheetDialog.findViewById(R.id.textAddToCartPreparation);
+        preparation.setText(catalogItem.getPreparation());
+        TextView time = bottomSheetDialog.findViewById(R.id.textAddToCartResultField);
+        time.setText(catalogItem.getTimeResult());
+        TextView bio = bottomSheetDialog.findViewById(R.id.textAddToCartBioField);
+        bio.setText(catalogItem.getBio());
+        Button add = bottomSheetDialog.findViewById(R.id.buttonAddToCartAdd);
+        add.setText("Добавить за " + String.valueOf(catalogItem.getPrice()) + " ₽");
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentContainerView fragmentContainerView = view.findViewById(R.id.fragmentCartContainer);
+                CartFragment cartFragment = new CartFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment);
+                transaction.commit();
+                bottomSheetDialog.dismiss();
+            }
+        });
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+        bottomSheetDialog.show();
     }
 }

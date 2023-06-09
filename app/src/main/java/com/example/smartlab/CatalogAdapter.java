@@ -9,7 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -60,10 +66,14 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CartFragment cartFragment = new CartFragment();
                 if(btnCatalogAdd.getText().toString().equals("Добавить")) {
                     btnCatalogAdd.setText("Удалить");
                     btnCatalogAdd.setTextColor(view.getResources().getColor(R.color.active_blue));
                     btnCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.empty_rounded_button));
+
+                    AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();
+                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment).commit();
                 }
                 else{
                     btnCatalogAdd.setText("Добавить");
