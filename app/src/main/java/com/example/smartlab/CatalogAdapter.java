@@ -1,6 +1,7 @@
 package com.example.smartlab;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         }
     }
     ArrayList<CatalogItem> list;
+    double priceTotal = 0;
     CatalogAdapter(ArrayList<CatalogItem> list, OnCatalogClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.list = list;
@@ -62,7 +64,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         textCatalogName.setText(currentItem.getName());
         textCatalogTimeResult.setText(currentItem.getTimeResult());
         textCatalogPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
-        
+
         holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +73,10 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
                     btnCatalogAdd.setText("Удалить");
                     btnCatalogAdd.setTextColor(view.getResources().getColor(R.color.active_blue));
                     btnCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.empty_rounded_button));
+                    priceTotal += currentItem.getPrice();
+                    Bundle bundle = new Bundle();
+                    bundle.putDouble("price", priceTotal);
+                    cartFragment.setArguments(bundle);
 
                     AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();
                     appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment).commit();
@@ -79,10 +85,16 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
                     btnCatalogAdd.setText("Добавить");
                     btnCatalogAdd.setTextColor(view.getResources().getColor(R.color.white));
                     btnCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.rounded_button_active));
+                    priceTotal -= currentItem.getPrice();
+                    Bundle bundle = new Bundle();
+                    bundle.putDouble("price", priceTotal);
+                    cartFragment.setArguments(bundle);
+
+                    AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();
+                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment).commit();
                 }
             }
         });
-
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
