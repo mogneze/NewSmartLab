@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 public class CartActivity extends AppCompatActivity {
     ArrayList<CatalogItem> catalogItemList;
     TextView textTotal;
+    Button btnGoToOrder;
     CartCatalogAdapter catalogAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,14 @@ public class CartActivity extends AppCompatActivity {
 
         textTotal = findViewById(R.id.textCartTotal);
         textTotal.setText(String.valueOf(Calculate())+" ₽");
+
+        btnGoToOrder = findViewById(R.id.btnGoToOrder);
+        btnGoToOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), OrderingActivity.class));
+            }
+        });
     }
     public double Calculate(){
         double sum = 0;

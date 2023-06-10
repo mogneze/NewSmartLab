@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CartFragment extends Fragment {
 
@@ -47,8 +48,13 @@ public class CartFragment extends Fragment {
         btnGoToCart = view.findViewById(R.id.btnGoToCart);
         textPrice = view.findViewById(R.id.textPriceToCart);
         textPrice.setText(String.valueOf(priceTotal));
-        if(priceTotal == 0){
+        try {
+            if (priceTotal == 0) {
 
+            }
+        }
+        catch (Exception e){
+            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }
         btnGoToCart.setOnClickListener(new View.OnClickListener() {
             @Override

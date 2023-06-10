@@ -76,7 +76,7 @@
             android:singleLine="true"
             android:textColorHint="@color/grey"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonAddToCartAdd"
+            android:id="@+id/btnGoToOrder"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"

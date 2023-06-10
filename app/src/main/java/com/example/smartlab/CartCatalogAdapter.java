@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class CartCatalogAdapter extends RecyclerView.Adapter<CartCatalogAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textCatalogName, textCatalogPatient, textCatalogPrice;
+        public ImageView btnPlus, btnMinus;
         public ImageButton btnRemove;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -27,6 +29,8 @@ public class CartCatalogAdapter extends RecyclerView.Adapter<CartCatalogAdapter.
             textCatalogPatient = itemView.findViewById(R.id.textCartPatient);
             textCatalogPrice = itemView.findViewById(R.id.textCartPrice);
             btnRemove = itemView.findViewById(R.id.btnCartRemoveItem);
+            btnPlus = itemView.findViewById(R.id.btnPlus);
+            btnMinus = itemView.findViewById(R.id.btnMinus);
         }
     }
     ArrayList<CatalogItem> list;
@@ -56,6 +60,18 @@ public class CartCatalogAdapter extends RecyclerView.Adapter<CartCatalogAdapter.
                 list.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, list.size());
+            }
+        });
+        holder.btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "minus", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "plus", Toast.LENGTH_SHORT).show();
             }
         });
 

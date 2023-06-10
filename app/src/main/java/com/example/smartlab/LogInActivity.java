@@ -19,7 +19,7 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        buttonNext = findViewById(R.id.buttonAddToCartAdd);
+        buttonNext = findViewById(R.id.btnGoToOrder);
         buttonNext.setEnabled(false);
         buttonNext.setBackground(getDrawable(R.drawable.rounded_button_inactive));
         emailText = findViewById(R.id.emailText);
@@ -40,12 +40,12 @@ public class LogInActivity extends AppCompatActivity {
         emailText = findViewById(R.id.emailText);
         String emText = emailText.getText().toString();
         if (!TextUtils.isEmpty(emText) && Patterns.EMAIL_ADDRESS.matcher(emText).matches()) {
-            buttonNext = findViewById(R.id.buttonAddToCartAdd);
+            buttonNext = findViewById(R.id.btnGoToOrder);
             buttonNext.setBackground(getDrawable(R.drawable.rounded_button_active));
             buttonNext.setEnabled(true);
         }
         else {
-            buttonNext = findViewById(R.id.buttonAddToCartAdd);
+            buttonNext = findViewById(R.id.btnGoToOrder);
             buttonNext.setBackground(getDrawable(R.drawable.rounded_button_inactive));
             buttonNext.setEnabled(false);
         }

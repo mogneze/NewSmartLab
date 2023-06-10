@@ -1,7 +1,5 @@
 package com.example.smartlab;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,10 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -153,7 +148,7 @@ public class MainPageFragment extends Fragment {
         time.setText(catalogItem.getTimeResult());
         TextView bio = bottomSheetDialog.findViewById(R.id.textAddToCartBioField);
         bio.setText(catalogItem.getBio());
-        Button add = bottomSheetDialog.findViewById(R.id.buttonAddToCartAdd);
+        Button add = bottomSheetDialog.findViewById(R.id.btnGoToOrder);
         add.setText("Добавить за " + String.valueOf(catalogItem.getPrice()) + " ₽");
         add.setOnClickListener(new View.OnClickListener() {
             @Override
