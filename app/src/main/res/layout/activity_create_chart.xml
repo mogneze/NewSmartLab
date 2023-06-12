@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textChart1" />
 
     <EditText
-        android:id="@+id/editTextOrderingAddress"
+        android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
@@ -85,7 +85,7 @@
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOrderingAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
 
     <EditText
         android:id="@+id/editTextLastname"

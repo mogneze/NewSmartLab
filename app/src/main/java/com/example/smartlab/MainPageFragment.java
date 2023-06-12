@@ -136,7 +136,7 @@ public class MainPageFragment extends Fragment {
     }
     public void createDialog(CatalogItem catalogItem){
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-        bottomSheetDialog.setContentView(R.layout.add_to_cart_widget);
+        bottomSheetDialog.setContentView(R.layout.dialog_add_to_cart);
         ImageView dismiss = bottomSheetDialog.findViewById(R.id.btnAddToCartClose);
         TextView title = bottomSheetDialog.findViewById(R.id.textAddToCartTitle);
         title.setText(catalogItem.getName());
@@ -148,7 +148,7 @@ public class MainPageFragment extends Fragment {
         time.setText(catalogItem.getTimeResult());
         TextView bio = bottomSheetDialog.findViewById(R.id.textAddToCartBioField);
         bio.setText(catalogItem.getBio());
-        Button add = bottomSheetDialog.findViewById(R.id.btnGoToOrder);
+        Button add = bottomSheetDialog.findViewById(R.id.btnAddressConfirm);
         add.setText("Добавить за " + String.valueOf(catalogItem.getPrice()) + " ₽");
         add.setOnClickListener(new View.OnClickListener() {
             @Override

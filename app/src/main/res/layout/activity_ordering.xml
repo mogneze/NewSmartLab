@@ -52,23 +52,24 @@
                 android:layout_marginTop="8dp"
                 android:text="Адрес *"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <EditText
-                android:id="@+id/editTextOrderingAddress"
+            <TextView
+                android:id="@+id/editTextAddress"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/grey_rounded_box"
-                android:hint="Выберите адрес"
-                android:inputType="textPersonName|textCapWords"
+                android:text="Выберите адрес"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
                 android:isScrollContainer="false"
                 android:padding="14sp"
                 android:scrollbarAlwaysDrawHorizontalTrack="false"
                 android:singleLine="true"
                 android:textColorHint="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textOrdering2" />
+                app:layout_constraintTop_toBottomOf="@+id/textOrdering2"/>
 
             <TextView
                 android:id="@+id/textOrdering3"
@@ -77,7 +78,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Дата и время *"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextOrderingAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
 
             <EditText
                 android:id="@+id/editTextOrderingDateTime"
@@ -93,7 +94,7 @@
                 android:singleLine="true"
                 android:textColorHint="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textOrdering3" />
+                app:layout_constraintTop_toBottomOf="@+id/textOrdering3"/>
 
             <TextView
                 android:id="@+id/textOrdering4"
