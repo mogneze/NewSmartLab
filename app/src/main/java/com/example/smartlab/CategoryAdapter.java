@@ -43,11 +43,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         CategoryItem currentItem = list.get(position);
         TextView textCategoryTitle = holder.textCategoryTitle;
         textCategoryTitle.setText(currentItem.getTitle());
-        try {
-            textCategoryTitle.setText(list.get(position).getName("name"));
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

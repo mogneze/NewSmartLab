@@ -99,7 +99,5 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentCartContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.example.smartlab.CartFragment"
-        tools:layout="@layout/fragment_cart" />
+        android:layout_height="wrap_content"/>
 </LinearLayout>
