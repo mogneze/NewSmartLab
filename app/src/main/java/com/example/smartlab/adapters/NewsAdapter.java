@@ -34,7 +34,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             textTitle = itemView.findViewById(R.id.textNewsTitle);
             textDescription = itemView.findViewById(R.id.textNewsComment);
             textPrice = itemView.findViewById(R.id.textNewsPrice);
-            image = itemView.findViewById(R.id.image);
+            image = itemView.findViewById(R.id.imageNews);
         }
     }
     @NonNull
@@ -46,18 +46,16 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        NewsAdapter.ItemViewHolder _holder = (NewsAdapter.ItemViewHolder) holder;
+        ItemViewHolder _holder = (ItemViewHolder) holder;
         NewsItem currentItem = (NewsItem) listRecyclerItem.get(position);
         _holder.textTitle.setText(currentItem.getTitle());
         _holder.textDescription.setText(currentItem.getDescription());
         _holder.textPrice.setText(String.valueOf(currentItem.getPrice()));
-        //_holder.image.setImageResource(currentItem.getImage());
-        /*Picasso.with(context)
-                .load(url)
+        Picasso.get()
+                .load(currentItem.getImage())
                 .placeholder(R.drawable.men)
-                .error(R.drawable.men)
-                .into(_holder.image);*/
-
+                .error(R.drawable.analyses_icon)
+                .into(_holder.image);
         _holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

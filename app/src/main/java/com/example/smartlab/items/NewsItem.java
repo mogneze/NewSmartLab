@@ -5,9 +5,9 @@ public class NewsItem {
     private String title;
     private String description;
     private String price;
-    private int image;
+    private String image;
 
-    public NewsItem(int id, String title, String description, String price, int image) {
+    public NewsItem(int id, String title, String description, String price, String image) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -26,7 +26,7 @@ public class NewsItem {
     public int getId() {
         return id;
     }
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 }

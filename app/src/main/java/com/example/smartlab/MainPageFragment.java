@@ -219,7 +219,8 @@ public class MainPageFragment extends Fragment {
                 String title = itemObj.getString("name");
                 String description = itemObj.getString("description");
                 String price = itemObj.getString("price");
-                NewsItem categoryItem = new NewsItem(id,title, description, price, R.drawable.men);
+                String image = itemObj.getString("image");
+                NewsItem categoryItem = new NewsItem(id,title, description, price, image);
                 newsList.add(categoryItem);
             }
         } catch (JSONException e) {
