@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,9 +9,11 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.smartlab.MainActivity;
+import com.example.smartlab.R;
 
 import java.util.Calendar;
 

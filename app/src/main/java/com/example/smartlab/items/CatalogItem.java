@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.items;
 
 public class CatalogItem {
     private int category;

@@ -1,29 +1,26 @@
-package com.example.smartlab;
+package com.example.smartlab.adapters;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.smartlab.R;
+import com.example.smartlab.fragments.CartFragment;
+import com.example.smartlab.items.CatalogItem;
 
 import java.util.ArrayList;
 
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder>{
 
-    interface OnCatalogClickListener{
+    public interface OnCatalogClickListener{
         void onCatalogClick(CatalogItem catalogItem, int position);
     }
     private final OnCatalogClickListener onClickListener;
@@ -42,7 +39,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     }
     ArrayList<CatalogItem> list;
     double priceTotal = 0;
-    CatalogAdapter(ArrayList<CatalogItem> list, OnCatalogClickListener onClickListener) {
+    public CatalogAdapter(ArrayList<CatalogItem> list, OnCatalogClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.list = list;
     }

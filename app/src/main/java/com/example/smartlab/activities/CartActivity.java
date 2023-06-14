@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.smartlab.R;
+import com.example.smartlab.adapters.CartCatalogAdapter;
+import com.example.smartlab.items.CatalogItem;
 
 import java.util.ArrayList;
 

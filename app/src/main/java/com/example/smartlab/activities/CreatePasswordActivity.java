@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.smartlab.R;
+import com.example.smartlab.activities.CreateChartActivity;
 
 public class CreatePasswordActivity extends AppCompatActivity {
 

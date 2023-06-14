@@ -7,14 +7,13 @@ import androidx.fragment.app.FragmentContainerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.smartlab.MainPageFragment;
+import com.example.smartlab.activities.CartActivity;
+import com.example.smartlab.fragments.ProfileFragment;
+import com.example.smartlab.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 

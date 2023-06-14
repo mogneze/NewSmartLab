@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.smartlab.R;
 
 public class EmailVerificationActivity extends AppCompatActivity {
 

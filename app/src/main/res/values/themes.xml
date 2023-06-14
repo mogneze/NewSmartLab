@@ -14,4 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="textAllCaps">false</item>
     </style>
+    <style name="MyCardViewStyle" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">16dp</item>
+    </style>
 </resources>

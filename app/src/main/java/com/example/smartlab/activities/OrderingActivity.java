@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smartlab.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class OrderingActivity extends AppCompatActivity {

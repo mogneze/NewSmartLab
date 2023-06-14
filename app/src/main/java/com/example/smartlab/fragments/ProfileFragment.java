@@ -1,4 +1,4 @@
-package com.example.smartlab;
+package com.example.smartlab.fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.smartlab.R;
 
 /**
  * A simple {@link Fragment} subclass.
