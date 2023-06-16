@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartlab.adapters.CatalogAdapter;
 import com.example.smartlab.adapters.CategoryAdapter;
@@ -37,59 +38,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainPageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainPageFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public MainPageFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainPageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainPageFragment newInstance(String param1, String param2) {
         MainPageFragment fragment = new MainPageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
-    ArrayList<NewsItem> newsItemList;
-    ArrayList<CatalogItem> catalogItemList;
-    ArrayList<CategoryItem> categoryItemList;
-
     JSONArray array;
     private List<Object> categoriesList = new ArrayList<>();
     private List<Object> newsList = new ArrayList<>();
+    private List<Object> catalogList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
     private class GetCategories extends AsyncTask<JSONObject, Void, String> {
         @Override
@@ -159,10 +125,38 @@ public class MainPageFragment extends Fragment {
             } return null;
         }
     }
-    public void Inflate (View view){
-        RecyclerView categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
-        categoryRecyclerView.setAdapter(new CategoryAdapter(getContext(), categoriesList));
+    private class GetCatalog extends AsyncTask<JSONObject, Void, String> {
+        @Override
+        protected String doInBackground(JSONObject... jsonObjects) {
+            try {
+                InputStream stream = null;
+                BufferedReader reader = null;
+                HttpURLConnection connection = null;
+                try {
+                    URL url = new URL("http://10.0.2.2:8000/api/catalog/");
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setReadTimeout(10000);
+                    connection.connect();
+
+                    stream = connection.getInputStream();
+                    reader = new BufferedReader(new InputStreamReader(stream));
+                    StringBuilder buf = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buf.append(line).append("\n");
+                    }
+                    JSONObject root = new JSONObject(buf.toString());
+                    array= root.getJSONArray("results");
+                    addCatalogFromJSON();
+                    return (buf.toString());
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } return null;
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -170,8 +164,7 @@ public class MainPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
         new GetCategories().execute(new JSONObject());
         new GetNews().execute(new JSONObject());
-
-        initData();
+        new GetCatalog().execute(new JSONObject());
 
         //новости кароч
         RecyclerView newsRecyclerView = view.findViewById(R.id.newsRecyclerView);
@@ -184,21 +177,19 @@ public class MainPageFragment extends Fragment {
         categoryRecyclerView.setAdapter(new CategoryAdapter(getContext(), categoriesList));
 
         //каталог
-        CatalogAdapter.OnCatalogClickListener catalogClickListener = new CatalogAdapter.OnCatalogClickListener() {
+        RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
+        catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+        CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList, new CatalogAdapter.OnCatalogClickListener() {
             @Override
             public void onCatalogClick(CatalogItem catalogItem, int position) {
                 createDialog(catalogItem);
             }
-        };
-        RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
-        CatalogAdapter catalogAdapter = new CatalogAdapter(catalogItemList, catalogClickListener);
+        });
         catalogRecyclerView.setAdapter(catalogAdapter);
-        catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
         return view;
     }
     private void addCategoriesFromJSON() {
         try {
-            // Заполняем Модель спаршенными данными
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
                 int id = itemObj.getInt("id");
@@ -212,7 +203,6 @@ public class MainPageFragment extends Fragment {
     }
     private void addNewsFromJSON() {
         try {
-            // Заполняем Модель спаршенными данными
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
                 int id = itemObj.getInt("id");
@@ -220,33 +210,31 @@ public class MainPageFragment extends Fragment {
                 String description = itemObj.getString("description");
                 String price = itemObj.getString("price");
                 String image = itemObj.getString("image");
-                NewsItem categoryItem = new NewsItem(id,title, description, price, image);
-                newsList.add(categoryItem);
+                NewsItem newsItem = new NewsItem(id,title, description, price, image);
+                newsList.add(newsItem);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    private void initData(){
-        newsItemList = new ArrayList<>();
-        categoryItemList = new ArrayList<>();
-        catalogItemList = new ArrayList<>();
-
-        /*newsItemList.add(new NewsItem("Чек-ап для мужчин", "9 исследований", 8000));
-        newsItemList.add(new NewsItem("Подготовка к вакцинации", "Комплексное обследование перед вакцинацией", 4000));
-        newsItemList.add(new NewsItem("назв", "камент", 10.0));
-        newsItemList.add(new NewsItem("назв", "камент", 10.0));*/
-
-        /*categoryItemList.add(new CategoryItem(1, "Популярные"));
-        categoryItemList.add(new CategoryItem(2, "Covid"));
-        categoryItemList.add(new CategoryItem(3, "Комплексные"));
-        categoryItemList.add(new CategoryItem(4, "ЗОЖ"));*/
-
-        catalogItemList.add(new CatalogItem(1, "ПЦР-тест на определение РНК коронавируса стандартный", "ну да описание", 1800, "2 дня", "подготовка", "Венозная кровь"));
-        catalogItemList.add(new CatalogItem(1, "Клинический анализ крови с лейкоцитарной формулировкой", "des", 2000, "1 день", "prep", "bio"));
-        catalogItemList.add(new CatalogItem(1, "Биохимический анализ крови, базовый", "des", 2440, "1 день", "prep", "bio"));
-        catalogItemList.add(new CatalogItem(1, "СОЭ (венозная кровь)", "des", 1800, "1 день", "prep", "bio"));
-        catalogItemList.add(new CatalogItem(1, "name", "des", 10.0, "1 d", "prep", "bio"));
+    private void addCatalogFromJSON() {
+        try {
+            for (int i=0; i<array.length(); ++i) {
+                JSONObject itemObj = array.getJSONObject(i);
+                int id = itemObj.getInt("id");
+                int category = itemObj.getInt("category");
+                String name = itemObj.getString("name");
+                String description = itemObj.getString("description");
+                String price = itemObj.getString("price");
+                String timeResult = itemObj.getString("time_result");
+                String preparation = itemObj.getString("preparation");
+                String bio = itemObj.getString("bio");
+                CatalogItem catalogItem = new CatalogItem(id,category, name, description, price,timeResult, preparation, bio);
+                catalogList.add(catalogItem);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     public void createDialog(CatalogItem catalogItem){
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());

@@ -25,16 +25,14 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
-        initData();
+        /*initData();
         RecyclerView catalogRecyclerView = findViewById(R.id.recyclerViewCartItems);
         catalogAdapter = new CartCatalogAdapter(catalogItemList);
         catalogRecyclerView.setAdapter(catalogAdapter);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
 
         textTotal = findViewById(R.id.textCartTotal);
-        textTotal.setText(String.valueOf(Calculate())+" ₽");
-
+        textTotal.setText(String.valueOf(Calculate())+" ₽");*/
         btnGoToOrder = findViewById(R.id.btnGoToOrder);
         btnGoToOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,11 +49,11 @@ public class CartActivity extends AppCompatActivity {
         return sum;
     }
     public void initData(){
-        catalogItemList = new ArrayList<>();
+        /*catalogItemList = new ArrayList<>();
         catalogItemList.add(new CatalogItem(1, "ПЦР-тест на определение РНК коронавируса стандартный", "des", 1800, "2 дня", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "Клинический анализ крови с лейкоцитарной формулировкой", "des", 2000, "1 день", "prep", "bio"));
         catalogItemList.add(new CatalogItem(1, "Биохимический анализ крови, базовый", "des", 2440, "1 день", "prep", "bio"));
-        catalogItemList.add(new CatalogItem(1, "СОЭ (венозная кровь)", "des", 1800, "1 день", "prep", "bio"));
+        catalogItemList.add(new CatalogItem(1, "СОЭ (венозная кровь)", "des", 1800, "1 день", "prep", "bio"));*/
     }
     public void onCartBackClick(View v){
         finish();
