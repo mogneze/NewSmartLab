@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,14 @@ import com.example.smartlab.R;
 import com.example.smartlab.fragments.CartFragment;
 import com.example.smartlab.items.CatalogItem;
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.json.*;
 
 public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final Context context;
@@ -93,9 +99,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Gson gson = new Gson();
                     String json = gson.toJson(arrPackage);
                     SharedPreferences.Editor editor = cartItems.edit();
-                    editor.putString("item " + ((String.valueOf(currentItem.getId()))), json);
+                    editor.putString("item " + (String.valueOf(currentItem.getId())), json);
                     editor.commit();
-
                     AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();
                     appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment).commit();
                 }
@@ -108,10 +113,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     bundle.putDouble("price", priceTotal);
                     cartFragment.setArguments(bundle);
 
-                    Gson gson = new Gson();
-                    String json = gson.toJson(arrPackage);
                     SharedPreferences.Editor editor = cartItems.edit();
-                    editor.clear();
+                    editor.remove("item " + (String.valueOf(currentItem.getId())));
                     editor.commit();
 
                     AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();

@@ -179,11 +179,10 @@ public class MainPageFragment extends Fragment {
         //каталог
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+
         CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList, new CatalogAdapter.OnCatalogClickListener() {
             @Override
-            public void onCatalogClick(CatalogItem catalogItem, int position) {
-                createDialog(catalogItem);
-            }
+            public void onCatalogClick(CatalogItem catalogItem, int position) { createDialog(catalogItem); }
         });
         catalogRecyclerView.setAdapter(catalogAdapter);
         return view;
