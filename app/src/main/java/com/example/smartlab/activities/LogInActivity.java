@@ -84,7 +84,7 @@ public class LogInActivity extends AppCompatActivity {
         return null;
     }
     public void onNextClick(View v) {
-        String content1 = postContent("https://reqres.in/api/users");
+        //String content1 = postContent("https://reqres.in/api/users");
         //startActivity(new Intent(this, EmailVerificationActivity.class));
     }
     public void onYandexClick(View v){

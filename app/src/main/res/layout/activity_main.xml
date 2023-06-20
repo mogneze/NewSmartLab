@@ -26,7 +26,8 @@
         app2:menu="@menu/navigation_items"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:labelVisibilityMode="labeled">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

@@ -2,6 +2,7 @@ package com.example.smartlab.adapters;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,17 +16,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smartlab.MainPageFragment;
 import com.example.smartlab.R;
 import com.example.smartlab.fragments.CartFragment;
 import com.example.smartlab.items.CatalogItem;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.*;
@@ -33,7 +38,6 @@ import org.json.*;
 public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final Context context;
     private final List<Object> listRecyclerItem;
-    double priceTotal = 0;
 
     ArrayList<String> arrPackage;
     SharedPreferences cartItems;
@@ -50,12 +54,19 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textCatalogName, textCatalogTimeResult, textCatalogPrice;
         public Button buttonCatalogAdd;
+
+        public ConstraintLayout cartWidget;
+        public TextView textTotalPrice;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textCatalogName = itemView.findViewById(R.id.textCatalogName);
             textCatalogTimeResult = itemView.findViewById(R.id.textCatalogTimeResult);
             textCatalogPrice = itemView.findViewById(R.id.textCatalogPrice);
             buttonCatalogAdd = itemView.findViewById(R.id.btnCatalogAdd);
+
+            cartWidget = itemView.findViewById(R.id.cartWidget);
+            textTotalPrice = itemView.findViewById(R.id.textPriceToCart);
         }
     }
     @NonNull
@@ -65,7 +76,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return new CatalogAdapter.ViewHolder((v));
     }
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ViewHolder _holder = (ViewHolder) holder;
         CatalogItem currentItem = (CatalogItem) listRecyclerItem.get(position);
 
@@ -76,18 +87,14 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         cartItems = context.getSharedPreferences("ITEMS", MODE_PRIVATE);
         _holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
+            boolean isButtonPressed = false;
             @Override
             public void onClick(View view) {
                 arrPackage = new ArrayList<>();
-                CartFragment cartFragment = new CartFragment();
-                if(_holder.buttonCatalogAdd.getText().toString().equals("Добавить")) {
+                if(!isButtonPressed) {
                     _holder.buttonCatalogAdd.setText("Удалить");
                     _holder.buttonCatalogAdd.setTextColor(view.getResources().getColor(R.color.active_blue));
                     _holder.buttonCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.empty_rounded_button));
-                    priceTotal += Double.parseDouble(currentItem.getPrice());
-                    Bundle bundle = new Bundle();
-                    bundle.putDouble("price", priceTotal);
-                    cartFragment.setArguments(bundle);
 
                     arrPackage.add(String.valueOf(currentItem.getId()));
                     arrPackage.add(String.valueOf(currentItem.getCategory()));
@@ -100,21 +107,42 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Gson gson = new Gson();
                     String json = gson.toJson(arrPackage);
                     SharedPreferences.Editor editor = cartItems.edit();
-                    editor.putString("item " + (String.valueOf(currentItem.getId())), json);
+                    editor.putString("item " + currentItem.getId(), json);
                     editor.commit();
                 }
                 else{
                     _holder.buttonCatalogAdd.setText("Добавить");
                     _holder.buttonCatalogAdd.setTextColor(view.getResources().getColor(R.color.white));
                     _holder.buttonCatalogAdd.setBackground(view.getResources().getDrawable(R.drawable.rounded_button_active));
-                    priceTotal -= Double.parseDouble(currentItem.getPrice());
-                    Bundle bundle = new Bundle();
-                    bundle.putDouble("price", priceTotal);
-                    cartFragment.setArguments(bundle);
 
                     SharedPreferences.Editor editor = cartItems.edit();
-                    editor.remove("item " + (String.valueOf(currentItem.getId())));
+                    editor.remove("item " + currentItem.getId());
                     editor.commit();
+                }
+                isButtonPressed = !isButtonPressed;
+
+                SharedPreferences cartItems;
+                cartItems = context.getSharedPreferences("ITEMS", context.MODE_PRIVATE);
+                boolean isCartEmpty = true;
+                double totalPrice = 0;
+                Gson gson = new Gson();
+                String json;
+                for (int i=1; i<100; i++){
+                    if(cartItems.contains("item "+i)){
+                        json = cartItems.getString("item " +i, "default");
+                        Type type = new TypeToken<List<String>>(){}.getType();
+                        List<String> arrPackageData = gson.fromJson(json, type);
+                        ArrayList<String> newItem = new ArrayList<>(arrPackageData);
+                        totalPrice += Double.parseDouble(String.valueOf(newItem.get(4)));
+                        isCartEmpty = false;
+                    }
+                }
+                if(!isCartEmpty) {
+                    //_holder.textTotalPrice.setText(String.valueOf(totalPrice));
+                    //_holder.cartWidget.setVisibility(View.VISIBLE);
+                }
+                else{
+                    //_holder.cartWidget.setVisibility(View.GONE);
                 }
             }
         });

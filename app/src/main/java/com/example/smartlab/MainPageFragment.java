@@ -72,6 +72,7 @@ public class MainPageFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Toast.makeText(getContext(), "on resume", Toast.LENGTH_SHORT).show();
+        initCart();
     }
     private class GetCategories extends AsyncTask<JSONObject, Void, String> {
         @Override
