@@ -62,6 +62,7 @@ public class CartActivity extends AppCompatActivity {
         items = getSharedPreferences("ITEMS", MODE_PRIVATE);
         catalogItemList = new ArrayList<>();
         Gson gson = new Gson();
+
         for (int i=1; i<100; i++) {
             String json;
             if(items.contains("item "+i)){

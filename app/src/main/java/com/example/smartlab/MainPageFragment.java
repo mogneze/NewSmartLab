@@ -1,9 +1,11 @@
 package com.example.smartlab;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smartlab.activities.CartActivity;
 import com.example.smartlab.adapters.CatalogAdapter;
 import com.example.smartlab.adapters.CategoryAdapter;
 import com.example.smartlab.adapters.NewsAdapter;
@@ -56,12 +59,19 @@ public class MainPageFragment extends Fragment {
     private List<Object> categoriesList = new ArrayList<>();
     private List<Object> newsList = new ArrayList<>();
     private List<Object> catalogList = new ArrayList<>();
+    TextView tx;
+    ConstraintLayout cartWidget;
     FragmentContainerView cartFragmentContainer;
     double totalPrice;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(getContext(), "on resume", Toast.LENGTH_SHORT).show();
     }
     private class GetCategories extends AsyncTask<JSONObject, Void, String> {
         @Override
@@ -171,6 +181,9 @@ public class MainPageFragment extends Fragment {
         new GetNews().execute(new JSONObject());
         new GetCatalog().execute(new JSONObject());
 
+        cartWidget = view.findViewById(R.id.cartWidget);
+        cartWidget.setVisibility(View.GONE);
+        tx = view.findViewById(R.id.textPriceToCart);
         //новости кароч
         RecyclerView newsRecyclerView = view.findViewById(R.id.newsRecyclerView);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
@@ -191,6 +204,18 @@ public class MainPageFragment extends Fragment {
         catalogRecyclerView.setAdapter(catalogAdapter);
 
         //корзина
+        initCart();
+
+        ConstraintLayout btnGoToCart = view.findViewById(R.id.btnGoToCart);
+        btnGoToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), CartActivity.class));
+            }
+        });
+        return view;
+    }
+    public void initCart(){
         SharedPreferences cartItems;
         cartItems = getActivity().getApplicationContext().getSharedPreferences("ITEMS", getContext().MODE_PRIVATE);
         boolean isCartEmpty = true;
@@ -203,17 +228,17 @@ public class MainPageFragment extends Fragment {
                 Type type = new TypeToken<List<String>>(){}.getType();
                 List<String> arrPackageData = gson.fromJson(json, type);
                 ArrayList<String> newItem = new ArrayList<>(arrPackageData);
-                totalPrice += Double.parseDouble(String.valueOf(newItem.get(1)));
+                totalPrice += Double.parseDouble(String.valueOf(newItem.get(4)));
                 isCartEmpty = false;
             }
         }
         if(!isCartEmpty) {
-            cartFragmentContainer = view.findViewById(R.id.fragmentCartContainer);
-            cartFragmentContainer.setVisibility(View.VISIBLE);
-            TextView tx = cartFragmentContainer.findViewById(R.id.textPriceToCart);
             tx.setText(String.valueOf(totalPrice));
+            cartWidget.setVisibility(View.VISIBLE);
         }
-        return view;
+        else{
+            cartWidget.setVisibility(View.GONE);
+        }
     }
     private void addCategoriesFromJSON() {
         try {
@@ -263,6 +288,7 @@ public class MainPageFragment extends Fragment {
             e.printStackTrace();
         }
     }
+    //TODO
     public void createDialog(CatalogItem catalogItem){
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
         bottomSheetDialog.setContentView(R.layout.dialog_add_to_cart);
@@ -282,11 +308,11 @@ public class MainPageFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentContainerView fragmentContainerView = view.findViewById(R.id.fragmentCartContainer);
+                /*FragmentContainerView fragmentContainerView = view.findViewById(R.id.fragmentCartContainer);
                 CartFragment cartFragment = new CartFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment);
                 transaction.commit();
-                bottomSheetDialog.dismiss();
+                bottomSheetDialog.dismiss();*/
             }
         });
         dismiss.setOnClickListener(new View.OnClickListener() {

@@ -73,11 +73,12 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         _holder.textCatalogTimeResult.setText(currentItem.getTimeResult());
         _holder.textCatalogPrice.setText(String.valueOf(currentItem.getPrice())+" ₽");
 
-        arrPackage = new ArrayList<>();
+
         cartItems = context.getSharedPreferences("ITEMS", MODE_PRIVATE);
         _holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                arrPackage = new ArrayList<>();
                 CartFragment cartFragment = new CartFragment();
                 if(_holder.buttonCatalogAdd.getText().toString().equals("Добавить")) {
                     _holder.buttonCatalogAdd.setText("Удалить");
@@ -101,8 +102,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     SharedPreferences.Editor editor = cartItems.edit();
                     editor.putString("item " + (String.valueOf(currentItem.getId())), json);
                     editor.commit();
-                    AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();
-                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment).commit();
                 }
                 else{
                     _holder.buttonCatalogAdd.setText("Добавить");
@@ -116,9 +115,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     SharedPreferences.Editor editor = cartItems.edit();
                     editor.remove("item " + (String.valueOf(currentItem.getId())));
                     editor.commit();
-
-                    AppCompatActivity appCompatActivity = (AppCompatActivity)view.getContext();
-                    appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment).commit();
                 }
             }
         });
