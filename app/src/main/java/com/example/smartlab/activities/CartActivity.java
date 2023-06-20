@@ -62,25 +62,28 @@ public class CartActivity extends AppCompatActivity {
         items = getSharedPreferences("ITEMS", MODE_PRIVATE);
         catalogItemList = new ArrayList<>();
         Gson gson = new Gson();
-        //boolean s = items.contains("item 5");
-        for (int i=1; items.contains("item " +i); i++) {
-            String json = items.getString("item 1", "default");
-            Type type = new TypeToken<List<String>>(){}.getType();
-            List<String> arrPackageData = gson.fromJson(json, type);
-            ArrayList<String> newItem = new ArrayList<>(arrPackageData);
-            CatalogItem catalogItem = new CatalogItem(Integer.parseInt(newItem.get(0)), Integer.parseInt(newItem.get(1)), newItem.get(2), newItem.get(3), newItem.get(4), newItem.get(5), newItem.get(6), newItem.get(7));
-            catalogItemList.add(catalogItem);
-            Toast.makeText(this, String.valueOf(newItem), Toast.LENGTH_LONG).show();
+        for (int i=1; i<100; i++) {
+            String json;
+            if(items.contains("item "+i)){
+                json = items.getString("item " +i, "default");
+                Type type = new TypeToken<List<String>>(){}.getType();
+                List<String> arrPackageData = gson.fromJson(json, type);
+                ArrayList<String> newItem = new ArrayList<>(arrPackageData);
+                CatalogItem catalogItem = new CatalogItem(Integer.parseInt(newItem.get(0)), Integer.parseInt(newItem.get(1)), newItem.get(2), newItem.get(3), newItem.get(4), newItem.get(5), newItem.get(6), newItem.get(7));
+                catalogItemList.add(catalogItem);
+            }
         }
-
     }
     public void onCartBackClick(View v){
         finish();
     }
     public void onClearClick(View v){
+        SharedPreferences cartItems;
+        cartItems = getSharedPreferences("ITEMS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = cartItems.edit();
+        editor.clear();
+        editor.commit();
         catalogItemList.clear();
         catalogAdapter.notifyDataSetChanged();
-        textTotal = findViewById(R.id.textCartTotal);
-        //textTotal.setText(String.valueOf(Calculate())+ " ₽");
     }
 }

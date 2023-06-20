@@ -1,5 +1,6 @@
 package com.example.smartlab;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -25,6 +26,8 @@ import com.example.smartlab.items.CatalogItem;
 import com.example.smartlab.items.CategoryItem;
 import com.example.smartlab.items.NewsItem;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,6 +56,8 @@ public class MainPageFragment extends Fragment {
     private List<Object> categoriesList = new ArrayList<>();
     private List<Object> newsList = new ArrayList<>();
     private List<Object> catalogList = new ArrayList<>();
+    FragmentContainerView cartFragmentContainer;
+    double totalPrice;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,7 +166,6 @@ public class MainPageFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
         new GetCategories().execute(new JSONObject());
         new GetNews().execute(new JSONObject());
@@ -179,12 +184,35 @@ public class MainPageFragment extends Fragment {
         //каталог
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-
         CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList, new CatalogAdapter.OnCatalogClickListener() {
             @Override
             public void onCatalogClick(CatalogItem catalogItem, int position) { createDialog(catalogItem); }
         });
         catalogRecyclerView.setAdapter(catalogAdapter);
+
+        //корзина
+        SharedPreferences cartItems;
+        cartItems = getActivity().getApplicationContext().getSharedPreferences("ITEMS", getContext().MODE_PRIVATE);
+        boolean isCartEmpty = true;
+        double totalPrice = 0;
+        Gson gson = new Gson();
+        String json;
+        for (int i=1; i<100; i++){
+            if(cartItems.contains("item "+i)){
+                json = cartItems.getString("item " +i, "default");
+                Type type = new TypeToken<List<String>>(){}.getType();
+                List<String> arrPackageData = gson.fromJson(json, type);
+                ArrayList<String> newItem = new ArrayList<>(arrPackageData);
+                totalPrice += Double.parseDouble(String.valueOf(newItem.get(1)));
+                isCartEmpty = false;
+            }
+        }
+        if(!isCartEmpty) {
+            cartFragmentContainer = view.findViewById(R.id.fragmentCartContainer);
+            cartFragmentContainer.setVisibility(View.VISIBLE);
+            TextView tx = cartFragmentContainer.findViewById(R.id.textPriceToCart);
+            tx.setText(String.valueOf(totalPrice));
+        }
         return view;
     }
     private void addCategoriesFromJSON() {
