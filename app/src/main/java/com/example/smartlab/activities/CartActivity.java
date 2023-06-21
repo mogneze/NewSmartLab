@@ -34,13 +34,13 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        textTotal = findViewById(R.id.textCartTotal);
         initData();
         RecyclerView catalogRecyclerView = findViewById(R.id.recyclerViewCartItems);
-        catalogAdapter = new CartCatalogAdapter(catalogItemList);
-        catalogRecyclerView.setAdapter(catalogAdapter);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+        catalogAdapter = new CartCatalogAdapter(getApplicationContext(), textTotal, catalogItemList);
+        catalogRecyclerView.setAdapter(catalogAdapter);
 
-        textTotal = findViewById(R.id.textCartTotal);
         textTotal.setText(Calculate()+" ₽");
         btnGoToOrder = findViewById(R.id.btnGoToOrder);
         btnGoToOrder.setOnClickListener(new View.OnClickListener() {
@@ -62,14 +62,14 @@ public class CartActivity extends AppCompatActivity {
         catalogItemList = new ArrayList<>();
         Gson gson = new Gson();
 
-        for (int i=1; i<100; i++) {
+        for (int i=1; i<20; i++) {
             String json;
             if(items.contains("item "+i)){
                 json = items.getString("item " +i, "default");
                 Type type = new TypeToken<List<String>>(){}.getType();
                 List<String> arrPackageData = gson.fromJson(json, type);
                 ArrayList<String> newItem = new ArrayList<>(arrPackageData);
-                CatalogItem catalogItem = new CatalogItem(Integer.parseInt(newItem.get(0)), Integer.parseInt(newItem.get(1)), newItem.get(2), newItem.get(3), newItem.get(4), newItem.get(5), newItem.get(6), newItem.get(7));
+                CatalogItem catalogItem = new CatalogItem(Integer.parseInt(newItem.get(0)), Integer.parseInt(newItem.get(1)), newItem.get(2), newItem.get(3), newItem.get(4), newItem.get(5), newItem.get(6), newItem.get(7), Integer.parseInt(newItem.get(8)));
                 catalogItemList.add(catalogItem);
             }
         }
@@ -85,5 +85,8 @@ public class CartActivity extends AppCompatActivity {
         editor.commit();
         catalogItemList.clear();
         catalogAdapter.notifyDataSetChanged();
+
+        textTotal = findViewById(R.id.textCartTotal);
+        textTotal.setText(Calculate()+" ₽");
     }
 }

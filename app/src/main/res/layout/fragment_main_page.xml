@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MainPageFragment"
     android:background="@color/background_color"
     android:orientation="vertical">
-
     <EditText
         android:id="@+id/editTextSearch"
         android:layout_width="match_parent"
@@ -24,6 +25,11 @@
         android:textColorHint="@color/grey"
         android:textSize="16sp"/>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/refresherLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -103,9 +109,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categoryRecyclerView"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/catalog_row"/>
@@ -120,8 +123,7 @@
         android:paddingStart="20dp"
         android:paddingTop="24dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="24dp"
-        android:gravity="bottom">
+        android:paddingBottom="24dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btnGoToCart"
@@ -170,4 +172,5 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -116,12 +116,12 @@ public class LogInActivity extends AppCompatActivity {
         emailText = findViewById(R.id.emailText);
         String emText = emailText.getText().toString();
         if (!TextUtils.isEmpty(emText) && Patterns.EMAIL_ADDRESS.matcher(emText).matches()) {
-            buttonNext = findViewById(R.id.btnAddressConfirm);
+            buttonNext = findViewById(R.id.btnGoToVerification);
             buttonNext.setBackground(getDrawable(R.drawable.rounded_button_active));
             buttonNext.setEnabled(true);
         }
         else {
-            buttonNext = findViewById(R.id.btnAddressConfirm);
+            buttonNext = findViewById(R.id.btnGoToVerification);
             buttonNext.setBackground(getDrawable(R.drawable.rounded_button_inactive));
             buttonNext.setEnabled(false);
         }

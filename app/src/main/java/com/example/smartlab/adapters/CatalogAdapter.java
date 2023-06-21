@@ -128,6 +128,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     arrPackage.add(String.valueOf(currentItem.getTimeResult()));
                     arrPackage.add(String.valueOf(currentItem.getPreparation()));
                     arrPackage.add(String.valueOf(currentItem.getBio()));
+                    arrPackage.add(String.valueOf(currentItem.getPatients()));
 
                     Gson gson = new Gson();
                     String json = gson.toJson(arrPackage);

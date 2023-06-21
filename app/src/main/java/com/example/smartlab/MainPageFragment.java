@@ -5,18 +5,22 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +28,6 @@ import com.example.smartlab.activities.CartActivity;
 import com.example.smartlab.adapters.CatalogAdapter;
 import com.example.smartlab.adapters.CategoryAdapter;
 import com.example.smartlab.adapters.NewsAdapter;
-import com.example.smartlab.fragments.CartFragment;
 import com.example.smartlab.items.CatalogItem;
 import com.example.smartlab.items.CategoryItem;
 import com.example.smartlab.items.NewsItem;
@@ -60,9 +63,9 @@ public class MainPageFragment extends Fragment {
     private List<Object> newsList = new ArrayList<>();
     private List<Object> catalogList = new ArrayList<>();
     TextView tx;
+    LinearLayout lr;
     ConstraintLayout cartWidget;
-    FragmentContainerView cartFragmentContainer;
-    double totalPrice;
+    private SwipeRefreshLayout refresherLayout;
     boolean[] catalogCount;
 
     @Override
@@ -73,6 +76,7 @@ public class MainPageFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Toast.makeText(getContext(), "on resume", Toast.LENGTH_SHORT).show();
+        initData();
         initCart();
     }
     private class GetCategories extends AsyncTask<JSONObject, Void, String> {
@@ -179,6 +183,11 @@ public class MainPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
+
+        lr = view.findViewById(R.id.linearLayout);
+        RecyclerView recyclerView = view.findViewById(R.id.newsRecyclerView);
+        CoordinatorLayout constraintLayout = view.findViewById(R.id.scrollView2);
+
         new GetCategories().execute(new JSONObject());
         new GetNews().execute(new JSONObject());
         new GetCatalog().execute(new JSONObject());
@@ -186,27 +195,6 @@ public class MainPageFragment extends Fragment {
         cartWidget = view.findViewById(R.id.cartWidget);
         cartWidget.setVisibility(View.GONE);
         tx = view.findViewById(R.id.textPriceToCart);
-        //новости кароч
-        RecyclerView newsRecyclerView = view.findViewById(R.id.newsRecyclerView);
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
-        newsRecyclerView.setAdapter(new NewsAdapter(getContext(), newsList));
-
-        //категории
-        RecyclerView categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
-        categoryRecyclerView.setAdapter(new CategoryAdapter(getContext(), categoriesList));
-
-        //каталог
-        RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
-        catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-        CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList,cartWidget, tx, catalogCount, new CatalogAdapter.OnCatalogClickListener() {
-            @Override
-            public void onCatalogClick(CatalogItem catalogItem, int position) { createDialog(catalogItem); }
-        });
-        catalogRecyclerView.setAdapter(catalogAdapter);
-
-        //корзина
-        initCart();
 
         ConstraintLayout btnGoToCart = view.findViewById(R.id.btnGoToCart);
         btnGoToCart.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +203,47 @@ public class MainPageFragment extends Fragment {
                 startActivity(new Intent(view.getContext(), CartActivity.class));
             }
         });
+
+        //обновление
+        refresherLayout = view.findViewById(R.id.refresherLayout);
+        refresherLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onResume();
+                refresherLayout.setRefreshing(false);
+            }
+        });
+        refresherLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout parent, @Nullable View child) {
+                if (constraintLayout != null) {
+                    return constraintLayout.canScrollVertically(-1);
+                }
+                return false;
+            }
+        });
+
         return view;
+    }
+    public void initData(){
+        //новости кароч
+        RecyclerView newsRecyclerView = getView().findViewById(R.id.newsRecyclerView);
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
+        newsRecyclerView.setAdapter(new NewsAdapter(getContext(), newsList));
+
+        //категории
+        RecyclerView categoryRecyclerView = getView().findViewById(R.id.categoryRecyclerView);
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
+        categoryRecyclerView.setAdapter(new CategoryAdapter(getContext(), categoriesList));
+
+        //каталог
+        RecyclerView catalogRecyclerView = getView().findViewById(R.id.catalogRecycleView);
+        catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+        CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList,cartWidget, tx, catalogCount, new CatalogAdapter.OnCatalogClickListener() {
+            @Override
+            public void onCatalogClick(CatalogItem catalogItem, int position) { createDialog(catalogItem); }
+        });
+        catalogRecyclerView.setAdapter(catalogAdapter);
     }
     public void initCart(){
         SharedPreferences cartItems;
@@ -286,7 +314,7 @@ public class MainPageFragment extends Fragment {
                 String timeResult = itemObj.getString("time_result");
                 String preparation = itemObj.getString("preparation");
                 String bio = itemObj.getString("bio");
-                CatalogItem catalogItem = new CatalogItem(id,category, name, description, price,timeResult, preparation, bio);
+                CatalogItem catalogItem = new CatalogItem(id,category, name, description, price,timeResult, preparation, bio, 1);
                 catalogList.add(catalogItem);
 
             }
