@@ -41,7 +41,7 @@ public class CartActivity extends AppCompatActivity {
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
 
         textTotal = findViewById(R.id.textCartTotal);
-        //textTotal.setText(String.valueOf(Calculate())+" ₽");
+        textTotal.setText(Calculate()+" ₽");
         btnGoToOrder = findViewById(R.id.btnGoToOrder);
         btnGoToOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +58,6 @@ public class CartActivity extends AppCompatActivity {
         return sum;
     }
     public void initData(){
-
         items = getSharedPreferences("ITEMS", MODE_PRIVATE);
         catalogItemList = new ArrayList<>();
         Gson gson = new Gson();

@@ -63,6 +63,7 @@ public class MainPageFragment extends Fragment {
     ConstraintLayout cartWidget;
     FragmentContainerView cartFragmentContainer;
     double totalPrice;
+    boolean[] catalogCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -198,7 +199,7 @@ public class MainPageFragment extends Fragment {
         //каталог
         RecyclerView catalogRecyclerView = view.findViewById(R.id.catalogRecycleView);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-        CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList, new CatalogAdapter.OnCatalogClickListener() {
+        CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList,cartWidget, tx, catalogCount, new CatalogAdapter.OnCatalogClickListener() {
             @Override
             public void onCatalogClick(CatalogItem catalogItem, int position) { createDialog(catalogItem); }
         });
@@ -234,7 +235,7 @@ public class MainPageFragment extends Fragment {
             }
         }
         if(!isCartEmpty) {
-            tx.setText(String.valueOf(totalPrice));
+            tx.setText(totalPrice + " ₽");
             cartWidget.setVisibility(View.VISIBLE);
         }
         else{
@@ -243,6 +244,7 @@ public class MainPageFragment extends Fragment {
     }
     private void addCategoriesFromJSON() {
         try {
+            categoriesList.clear();
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
                 int id = itemObj.getInt("id");
@@ -256,6 +258,7 @@ public class MainPageFragment extends Fragment {
     }
     private void addNewsFromJSON() {
         try {
+            newsList.clear();
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
                 int id = itemObj.getInt("id");
@@ -272,6 +275,7 @@ public class MainPageFragment extends Fragment {
     }
     private void addCatalogFromJSON() {
         try {
+            catalogList.clear();
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
                 int id = itemObj.getInt("id");
@@ -284,12 +288,14 @@ public class MainPageFragment extends Fragment {
                 String bio = itemObj.getString("bio");
                 CatalogItem catalogItem = new CatalogItem(id,category, name, description, price,timeResult, preparation, bio);
                 catalogList.add(catalogItem);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        catalogCount = new boolean[catalogList.size()];
     }
-    //TODO
+    //TODO диалог
     public void createDialog(CatalogItem catalogItem){
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
         bottomSheetDialog.setContentView(R.layout.dialog_add_to_cart);
