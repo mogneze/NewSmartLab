@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -69,16 +70,41 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         return new CatalogAdapter.ViewHolder((v));
     }
-    private void pressButton(int position, ViewHolder _holder){
+    private void pressButton(int position, ViewHolder _holder, CatalogItem currentItem){
+        arrPackage = new ArrayList<>();
         if(addedItems != null && addedItems[position]){
             _holder.buttonCatalogAdd.setText("Удалить");
             _holder.buttonCatalogAdd.setTextColor(context.getResources().getColor(R.color.active_blue));
             _holder.buttonCatalogAdd.setBackground(context.getResources().getDrawable(R.drawable.empty_rounded_button));
+
+            arrPackage.add(String.valueOf(currentItem.getId()));
+            arrPackage.add(String.valueOf(currentItem.getCategory()));
+            arrPackage.add(String.valueOf(currentItem.getName()));
+            arrPackage.add(String.valueOf(currentItem.getDescription()));
+            arrPackage.add(String.valueOf(currentItem.getPrice()));
+            arrPackage.add(String.valueOf(currentItem.getTimeResult()));
+            arrPackage.add(String.valueOf(currentItem.getPreparation()));
+            arrPackage.add(String.valueOf(currentItem.getBio()));
+            arrPackage.add(String.valueOf(currentItem.getPatients()));
+
+            Gson gson = new Gson();
+            String json = gson.toJson(arrPackage);
+            SharedPreferences.Editor editor = cartItems.edit();
+            editor.putString("item " + currentItem.getId(), json);
+            editor.commit();
+
+            addedItems[position] = false;
         }
         else{
             _holder.buttonCatalogAdd.setText("Добавить");
             _holder.buttonCatalogAdd.setTextColor(context.getResources().getColor(R.color.white));
             _holder.buttonCatalogAdd.setBackground(context.getResources().getDrawable(R.drawable.rounded_button_active));
+
+            SharedPreferences.Editor editor = cartItems.edit();
+            editor.remove("item " + currentItem.getId());
+            editor.commit();
+
+            addedItems[position] = true;
         }
     }
     @Override
@@ -110,41 +136,41 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
 
-        pressButton(position, _holder);
+        pressButton(position, _holder, currentItem);
         _holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
-            boolean isButtonPressed = false;
             @Override
             public void onClick(View view) {
-                arrPackage = new ArrayList<>();
-                if(!isButtonPressed) {
-                    addedItems[position] = true;
-                    pressButton(position, _holder);
-
-                    arrPackage.add(String.valueOf(currentItem.getId()));
-                    arrPackage.add(String.valueOf(currentItem.getCategory()));
-                    arrPackage.add(String.valueOf(currentItem.getName()));
-                    arrPackage.add(String.valueOf(currentItem.getDescription()));
-                    arrPackage.add(String.valueOf(currentItem.getPrice()));
-                    arrPackage.add(String.valueOf(currentItem.getTimeResult()));
-                    arrPackage.add(String.valueOf(currentItem.getPreparation()));
-                    arrPackage.add(String.valueOf(currentItem.getBio()));
-                    arrPackage.add(String.valueOf(currentItem.getPatients()));
-
-                    Gson gson = new Gson();
-                    String json = gson.toJson(arrPackage);
-                    SharedPreferences.Editor editor = cartItems.edit();
-                    editor.putString("item " + currentItem.getId(), json);
-                    editor.commit();
-                }
-                else{
-                    addedItems[position] = false;
-                    pressButton(position, _holder);
-
-                    SharedPreferences.Editor editor = cartItems.edit();
-                    editor.remove("item " + currentItem.getId());
-                    editor.commit();
-                }
-                isButtonPressed = !isButtonPressed;
+                    pressButton(position, _holder, currentItem);
+//                arrPackage = new ArrayList<>();
+//                if(!isButtonPressed) {
+//                    addedItems[position] = true;
+//                    pressButton(position, _holder, currentItem);
+//
+//                    arrPackage.add(String.valueOf(currentItem.getId()));
+//                    arrPackage.add(String.valueOf(currentItem.getCategory()));
+//                    arrPackage.add(String.valueOf(currentItem.getName()));
+//                    arrPackage.add(String.valueOf(currentItem.getDescription()));
+//                    arrPackage.add(String.valueOf(currentItem.getPrice()));
+//                    arrPackage.add(String.valueOf(currentItem.getTimeResult()));
+//                    arrPackage.add(String.valueOf(currentItem.getPreparation()));
+//                    arrPackage.add(String.valueOf(currentItem.getBio()));
+//                    arrPackage.add(String.valueOf(currentItem.getPatients()));
+//
+//                    Gson gson = new Gson();
+//                    String json = gson.toJson(arrPackage);
+//                    SharedPreferences.Editor editor = cartItems.edit();
+//                    editor.putString("item " + currentItem.getId(), json);
+//                    editor.commit();
+//                }
+//                else{
+//                    addedItems[position] = false;
+//                    pressButton(position, _holder, currentItem);
+//
+//                    SharedPreferences.Editor editor = cartItems.edit();
+//                    editor.remove("item " + currentItem.getId());
+//                    editor.commit();
+//                }
+//                isButtonPressed = !isButtonPressed;
 
                 SharedPreferences cartItems;
                 cartItems = context.getSharedPreferences("ITEMS", MODE_PRIVATE);

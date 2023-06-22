@@ -37,6 +37,7 @@
         android:layout_marginTop="24dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textOrdering1">
@@ -105,13 +106,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextOrderingDateTime" />
 
+            <LinearLayout
+                android:id="@+id/spinnerPatients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_patient_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textOrdering4"
+                android:orientation="horizontal"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerOrderingPatients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textOrdering4" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerPatients"
+                tools:listitem="@layout/patients_row" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnOrderingAddPatient"

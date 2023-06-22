@@ -205,7 +205,7 @@ public class MainPageFragment extends Fragment {
         });
 
         //обновление
-        refresherLayout = view.findViewById(R.id.refresherLayout);
+        /*refresherLayout = view.findViewById(R.id.refresherLayout);
         refresherLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -221,7 +221,7 @@ public class MainPageFragment extends Fragment {
                 }
                 return false;
             }
-        });
+        });*/
 
         return view;
     }
@@ -339,7 +339,7 @@ public class MainPageFragment extends Fragment {
         TextView bio = bottomSheetDialog.findViewById(R.id.textAddToCartBioField);
         bio.setText(catalogItem.getBio());
         Button add = bottomSheetDialog.findViewById(R.id.btnAddressConfirm);
-        add.setText("Добавить за " + String.valueOf(catalogItem.getPrice()) + " ₽");
+        add.setText("Добавить за " + catalogItem.getPrice() + " ₽");
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
