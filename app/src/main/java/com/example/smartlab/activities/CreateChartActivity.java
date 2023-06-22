@@ -9,6 +9,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,12 +23,14 @@ public class CreateChartActivity extends AppCompatActivity {
     String[] genders = {"М", "Ж"};
     TextView birthDate;
     Calendar dateAndTime = Calendar.getInstance();
+    EditText editTextAddress, editTextSurname, editTextLastname, editTextBirthDate;
+    Spinner spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_chart);
 
-        Spinner spinner = findViewById(R.id.spinnerGender);
+        spinner = findViewById(R.id.spinnerGender);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, genders);
         spinner.setAdapter(adapter);
     }
