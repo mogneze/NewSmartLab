@@ -34,14 +34,53 @@ public class EmailVerificationActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                editN2.requestFocus();
             }
             @Override
             public void afterTextChanged(Editable editable) {
             }
         };
-
         editN1.addTextChangedListener(textWatcher);
+        TextWatcher textWatcher2 = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                editN3.requestFocus();
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+        editN2.addTextChangedListener(textWatcher2);
+        TextWatcher textWatcher3 = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                editN4.requestFocus();
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+        editN3.addTextChangedListener(textWatcher3);
+        TextWatcher textWatcher4 = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                startActivity(new Intent(getApplicationContext(), CreatePasswordActivity.class));
+                finish();
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+        editN4.addTextChangedListener(textWatcher4);
     }
     public void createTimer(){
         textSendCode = findViewById(R.id.textSendCode);
