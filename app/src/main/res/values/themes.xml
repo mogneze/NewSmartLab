@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SmartLab" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
+        <item name="fontFamily">@font/sf_pro_display_regular</item>
         <item name="colorPrimary">@color/active_blue</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/inactive_blue</item>
@@ -19,5 +20,11 @@
     </style>
     <style name="Theme.SmartLab.Launcher">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+    <style name="Text">
+        <item name="fontFamily">@font/sf_pro_display_regular</item>
+    </style>
+    <style name="TextBold">
+        <item name="fontFamily">@font/sf_pro_display_bold</item>
     </style>
 </resources>

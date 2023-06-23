@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.CreateChartActivity"
     android:padding="20sp"
-    android:background="@color/background_color">
+    android:background="@color/white">
     <!--TODO: 1. Прокрутка edittext`а
               2. Спиннер-->
     <TextView
@@ -19,7 +19,8 @@
         android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/TextBold"/>
 
     <TextView
         android:id="@+id/textSkipChart"

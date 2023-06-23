@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.CartActivity"
-    android:background="@color/background_color"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <!-- TODO ПЕРЕДЕЛАТЬ ВСЁ!!!!!!!!!!-->
@@ -36,7 +36,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCartBack" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCartBack"
+        style="@style/TextBold"/>
 
     <ImageButton
         android:id="@+id/btnClearCart"
@@ -80,7 +81,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/btnGoToOrder"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/TextBold"/>
 
         <TextView
             android:id="@+id/textCart2"
@@ -92,7 +94,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/btnGoToOrder"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextBold"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGoToOrder"

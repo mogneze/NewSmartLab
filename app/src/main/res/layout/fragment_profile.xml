@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment"
-    android:background="@color/background_color">
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,10 +23,10 @@
                 android:text="Карта пациента"
                 android:textColor="@color/black"
                 android:textSize="24dp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TextBold"/>
 
             <ImageView
                 android:id="@+id/imgProfilePicture"
@@ -110,7 +110,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextSurname" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextBirthDate"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -118,12 +118,13 @@
                 android:background="@drawable/grey_rounded_box"
                 android:hint="Дата рождения"
                 android:inputType="datetime"
+                android:textSize="17sp"
                 android:padding="14sp"
                 android:singleLine="true"
                 android:textColorHint="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextLastname" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextLastname"/>
 
             <Spinner
                 android:id="@+id/spinnerGender"
@@ -133,17 +134,19 @@
                 android:background="@drawable/grey_rounded_box"
                 android:scrollbars="none"
                 android:padding="14sp"
+                android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextBirthDate"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonCreate"
+                android:id="@+id/buttonSaveOrCreate"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:enabled="false"
                 android:layout_marginTop="22dp"
-                android:background="@drawable/rounded_button_active"
-                android:text="Сохранить"
+                android:background="@drawable/rounded_button_inactive"
+                android:text="Создать"
                 android:textColor="@color/white"
                 android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"

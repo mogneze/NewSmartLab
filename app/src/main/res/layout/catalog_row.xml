@@ -38,7 +38,8 @@
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/TextBold"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCatalogAdd"
