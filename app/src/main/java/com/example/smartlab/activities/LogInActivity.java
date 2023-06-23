@@ -3,6 +3,7 @@ package com.example.smartlab.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -33,8 +34,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class LogInActivity extends AppCompatActivity {
     EditText emailText;
     Button buttonNext;
-
+    SharedPreferences sharedPreferences;
     public void onNextClick(View v) {
+        emailText = findViewById(R.id.emailText);
+        sharedPreferences = getSharedPreferences("SETTINGS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", emailText.getText().toString());
+        editor.commit();
         startActivity(new Intent(this, EmailVerificationActivity.class));
     }
     public void onYandexClick(View v){

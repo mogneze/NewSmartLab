@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.smartlab.MainPageFragment;
 import com.example.smartlab.activities.CartActivity;
+import com.example.smartlab.fragments.EmptyFragment;
 import com.example.smartlab.fragments.ProfileFragment;
 import com.example.smartlab.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     MainPageFragment mainPageFragment = new MainPageFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    EmptyFragment emptyFragment = new EmptyFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +42,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, mainPageFragment).commit();
                 return true;
             case R.id.resultsMenuItem:
-                startActivity(new Intent(this, CartActivity.class));
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, emptyFragment).commit();
                 return true;
             case R.id.supportMenuItem:
-                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, emptyFragment).commit();
                 return true;
             case R.id.profileMenuItem:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, profileFragment).commit();

@@ -84,7 +84,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
     }
     public void createTimer(){
         textSendCode = findViewById(R.id.textSendCode);
-        new CountDownTimer(10000, 1000) {
+        new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
                 textSendCode.setText("Отправить код повторно можно будет через " + millisUntilFinished / 1000 + " секунд");
             }
@@ -105,9 +105,5 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
     public void onBackClick(View v){
         startActivity(new Intent(this, LogInActivity.class));
-    }
-    public void onTempClick(View v){
-        startActivity(new Intent(this, CreatePasswordActivity.class));
-        finish();
     }
 }

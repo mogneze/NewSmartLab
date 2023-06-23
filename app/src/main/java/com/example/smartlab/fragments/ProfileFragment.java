@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, genders);
         spinner.setAdapter(adapter);
         if(sharedPreferences.contains("gender")){
-            if(sharedPreferences.getString("gender", "Женский").equals("Женский")) spinner.setSelection(1);
+            if(sharedPreferences.getString("gender", "").equals("Женский")) spinner.setSelection(1);
             else spinner.setSelection(0);
         }
 

@@ -54,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Picasso.get()
                 .load(currentItem.getImage())
                 .placeholder(R.drawable.men)
-                .error(R.drawable.analyses_icon)
+                .error(R.drawable.men)
                 .into(_holder.image);
         _holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

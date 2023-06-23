@@ -68,7 +68,6 @@ public class MainPageFragment extends Fragment {
     ConstraintLayout cartWidget;
     static CatalogAdapter catalogAdapter;
 
-    private SwipeRefreshLayout refresherLayout;
     static boolean[] catalogCount;
 
     @Override
@@ -78,7 +77,6 @@ public class MainPageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getContext(), "on resume", Toast.LENGTH_SHORT).show();
         initData();
         initCart();
     }
@@ -235,7 +233,7 @@ public class MainPageFragment extends Fragment {
         double totalPrice = 0;
         Gson gson = new Gson();
         String json;
-        for (int i=1; i<100; i++){
+        for (int i=1; i<20; i++){
             if(cartItems.contains("item "+i)){
                 json = cartItems.getString("item " +i, "default");
                 Type type = new TypeToken<List<String>>(){}.getType();
