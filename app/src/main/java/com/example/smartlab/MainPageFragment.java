@@ -58,15 +58,18 @@ public class MainPageFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    JSONArray array;
+    static JSONArray array;
     private List<Object> categoriesList = new ArrayList<>();
     private List<Object> newsList = new ArrayList<>();
-    private List<Object> catalogList = new ArrayList<>();
+    static private List<Object> catalogList = new ArrayList<>();
+    static private List<CatalogItem> catalogItemList = new ArrayList<>();
     TextView tx;
     LinearLayout lr;
     ConstraintLayout cartWidget;
+    static CatalogAdapter catalogAdapter;
+
     private SwipeRefreshLayout refresherLayout;
-    boolean[] catalogCount;
+    static boolean[] catalogCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -170,7 +173,7 @@ public class MainPageFragment extends Fragment {
                     }
                     JSONObject root = new JSONObject(buf.toString());
                     array= root.getJSONArray("results");
-                    addCatalogFromJSON();
+                    addCatalogFromJSON(1);
                     return (buf.toString());
                 } catch (Exception e) {
                     e.getMessage();
@@ -203,26 +206,6 @@ public class MainPageFragment extends Fragment {
                 startActivity(new Intent(view.getContext(), CartActivity.class));
             }
         });
-
-        //обновление
-        /*refresherLayout = view.findViewById(R.id.refresherLayout);
-        refresherLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onResume();
-                refresherLayout.setRefreshing(false);
-            }
-        });
-        refresherLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
-            @Override
-            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout parent, @Nullable View child) {
-                if (constraintLayout != null) {
-                    return constraintLayout.canScrollVertically(-1);
-                }
-                return false;
-            }
-        });*/
-
         return view;
     }
     public void initData(){
@@ -239,7 +222,7 @@ public class MainPageFragment extends Fragment {
         //каталог
         RecyclerView catalogRecyclerView = getView().findViewById(R.id.catalogRecycleView);
         catalogRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-        CatalogAdapter catalogAdapter = new CatalogAdapter(getContext(), catalogList,cartWidget, tx, catalogCount, new CatalogAdapter.OnCatalogClickListener() {
+         catalogAdapter = new CatalogAdapter(getContext(), catalogList,cartWidget, tx, catalogCount, new CatalogAdapter.OnCatalogClickListener() {
             @Override
             public void onCatalogClick(CatalogItem catalogItem, int position) { createDialog(catalogItem); }
         });
@@ -301,27 +284,29 @@ public class MainPageFragment extends Fragment {
             e.printStackTrace();
         }
     }
-    private void addCatalogFromJSON() {
+    public static void addCatalogFromJSON(int category_id) {
         try {
             catalogList.clear();
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
-                int id = itemObj.getInt("id");
-                int category = itemObj.getInt("category");
-                String name = itemObj.getString("name");
-                String description = itemObj.getString("description");
-                String price = itemObj.getString("price");
-                String timeResult = itemObj.getString("time_result");
-                String preparation = itemObj.getString("preparation");
-                String bio = itemObj.getString("bio");
-                CatalogItem catalogItem = new CatalogItem(id,category, name, description, price,timeResult, preparation, bio, 1);
-                catalogList.add(catalogItem);
-
+                if(itemObj.getInt("category") == category_id) {
+                    int id = itemObj.getInt("id");
+                    int category = itemObj.getInt("category");
+                    String name = itemObj.getString("name");
+                    String description = itemObj.getString("description");
+                    String price = itemObj.getString("price");
+                    String timeResult = itemObj.getString("time_result");
+                    String preparation = itemObj.getString("preparation");
+                    String bio = itemObj.getString("bio");
+                    CatalogItem catalogItem = new CatalogItem(id, category, name, description, price, timeResult, preparation, bio, 1);
+                    catalogList.add(catalogItem);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         catalogCount = new boolean[catalogList.size()];
+        catalogAdapter.notifyDataSetChanged();
     }
     //TODO диалог
     public void createDialog(CatalogItem catalogItem){
@@ -343,11 +328,7 @@ public class MainPageFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*FragmentContainerView fragmentContainerView = view.findViewById(R.id.fragmentCartContainer);
-                CartFragment cartFragment = new CartFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.fragmentCartContainer, cartFragment);
-                transaction.commit();
-                bottomSheetDialog.dismiss();*/
+                Toast.makeText(getContext(), "Пожалуйста не нажимайте...", Toast.LENGTH_SHORT).show();
             }
         });
         dismiss.setOnClickListener(new View.OnClickListener() {

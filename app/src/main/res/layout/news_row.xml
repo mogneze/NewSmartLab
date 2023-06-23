@@ -51,6 +51,7 @@
         android:maxHeight="152dp"
         android:maxWidth="140dp"
         android:adjustViewBounds="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 

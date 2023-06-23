@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +23,9 @@ public class OrderingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordering);
 
-        Spinner spinner = findViewById(R.id.spinnerPatients);
+        LinearLayout spinner = findViewById(R.id.spinnerPatients);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, patients);
-        spinner.setAdapter(adapter);
+        //spinner.setAdapter(adapter);
 
         addressText = findViewById(R.id.editTextAddress);
         addressText.setOnClickListener(new View.OnClickListener() {

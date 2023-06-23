@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smartlab.MainPageFragment;
 import com.example.smartlab.items.CategoryItem;
 import com.example.smartlab.R;
 
@@ -33,6 +34,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.category_row, parent, false);
+        //MainPageFragment.addCatalogFromJSON(1);
         return new CategoryAdapter.ItemViewHolder((v));
     }
     @Override
@@ -43,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         _holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, currentItem.getTitle(), Toast.LENGTH_SHORT).show();
+                MainPageFragment.addCatalogFromJSON(currentItem.getId());
             }
         });
     }

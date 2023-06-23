@@ -17,4 +17,7 @@
     <style name="MyCardViewStyle" parent="Theme.AppCompat.Light">
         <item name="cardCornerRadius">16dp</item>
     </style>
+    <style name="Theme.SmartLab.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
 </resources>
