@@ -287,7 +287,6 @@ public class MainPageFragment extends Fragment {
             catalogList.clear();
             for (int i=0; i<array.length(); ++i) {
                 JSONObject itemObj = array.getJSONObject(i);
-                if(itemObj.getInt("category") == category_id) {
                     int id = itemObj.getInt("id");
                     int category = itemObj.getInt("category");
                     String name = itemObj.getString("name");
@@ -298,7 +297,7 @@ public class MainPageFragment extends Fragment {
                     String bio = itemObj.getString("bio");
                     CatalogItem catalogItem = new CatalogItem(id, category, name, description, price, timeResult, preparation, bio, 1);
                     catalogList.add(catalogItem);
-                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

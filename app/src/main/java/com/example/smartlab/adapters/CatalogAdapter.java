@@ -147,7 +147,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         }
-        checkButton(position, _holder, currentItem);
+        pressButton(position, _holder, currentItem);
         _holder.buttonCatalogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

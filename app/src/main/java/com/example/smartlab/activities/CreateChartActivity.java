@@ -46,8 +46,10 @@ public class CreateChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_chart);
 
         sharedPreferences = getSharedPreferences("CHART", MODE_PRIVATE);
-        if(sharedPreferences.contains("surname")) startActivity(new Intent(this, MainActivity.class));
-        finish();
+        if(sharedPreferences.contains("surname")) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
 
         spinner = findViewById(R.id.spinnerGender);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, genders);

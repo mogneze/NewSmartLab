@@ -20,6 +20,8 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+
+
         sharedPreferences = getSharedPreferences("SETTINGS", MODE_PRIVATE);
         if(sharedPreferences.contains("email")) startActivity(new Intent(this, CreatePasswordActivity.class));
         else startActivity(new Intent(this, LogInActivity.class));
