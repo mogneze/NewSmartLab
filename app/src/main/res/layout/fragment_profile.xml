@@ -33,15 +33,12 @@
                 android:layout_width="148dp"
                 android:layout_height="123dp"
                 android:layout_marginTop="8dp"
-                android:paddingStart="48dp"
-                android:paddingEnd="48dp"
-                android:paddingTop="38dp"
-                android:paddingBottom="38dp"
                 android:background="@drawable/profile_pic_background"
+                android:scaleType="fitXY"
                 android:src="@drawable/camera"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textProfile1"/>
+                app:layout_constraintTop_toBottomOf="@+id/textProfile1" />
 
             <TextView
                 android:id="@+id/textProfile2"
